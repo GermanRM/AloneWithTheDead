@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8587992232355874803}
   - component: {fileID: 8587992232355874804}
   - component: {fileID: 8587992232355874805}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 8587992232629277194}
   - component: {fileID: 8587992232629277192}
   - component: {fileID: 8587992232629277193}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 8587992232760136498}
   - component: {fileID: 8587992232760136499}
   - component: {fileID: 8587992232760136496}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -296,7 +296,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8587992232820422847}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 8587992233087858523}
   - component: {fileID: 8587992233087858524}
   - component: {fileID: 8587992233087858522}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -391,7 +391,7 @@ MonoBehaviour:
     m_Bits: 8
   gravity: -10
   velocity: {x: 0, y: 0, z: 0}
-  airControlReducer: 0.2
+  airControlReducer: 0.8
   movementInput: {x: 0, y: 0}
   moveDirection: {x: 0, y: 0, z: 0}
   Grounded: 0
@@ -424,7 +424,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8587992233340290896}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}

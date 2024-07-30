@@ -74,12 +74,12 @@ MonoBehaviour:
   viewAngle: 65.88
   targetMask:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 64
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1
   visibleTargets: []
-  seeFOV: 0
+  seeFOV: 1
 --- !u!195 &3200052984308719429
 NavMeshAgent:
   m_ObjectHideFlags: 0

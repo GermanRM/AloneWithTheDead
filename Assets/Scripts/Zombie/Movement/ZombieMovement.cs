@@ -88,12 +88,13 @@ public class ZombieMovement : MonoBehaviour
         {
             targetPos = GetDetectedPlayerPos();
             agent.speed = runSpeed;
+            goToNextPoint = false;
             agent.SetDestination(targetPos);
         }
         else
         {
-            if (agent.remainingDistance <= agent.stoppingDistance)
-            {
+            if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
+            {               
                 agent.speed = walkSpeed;
 
                 if (goToNextPoint) //done with path
@@ -105,6 +106,10 @@ public class ZombieMovement : MonoBehaviour
                         agent.SetDestination(point);
                         StartCoroutine(GoNextPointDelay(Random.Range(minRandomMovementDelay, maxRandomMovementDelay)));
                     }
+                }
+                else
+                {
+                    StartCoroutine(GoNextPointDelay(Random.Range(minRandomMovementDelay, maxRandomMovementDelay)));
                 }
             }
         }
