@@ -285,8 +285,7 @@ public class PlayerMovement : MonoBehaviour
     #region Debug
     private void OnDrawGizmos()
     {
-        Gizmos.color = isGrounded() ? Color.green : Color.red;
-        Gizmos.DrawWireCube(groundCheck.position, groundCheckBoxSize); //Draw box check
+        ExtDebug.DrawBoxCastBox(groundCheck.position, groundCheckBoxSize, Quaternion.identity, Vector3.down, groundRayDistance, isGrounded() ? Color.red : Color.green);
     }
     #endregion
 }

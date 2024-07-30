@@ -28,10 +28,6 @@ public class ZombieMovement : MonoBehaviour
     [SerializeField] private float watchTimeTolerance;
     private float watchTimeCounter = 0; //Counter of watchTime
 
-    [Tooltip("Amount of time the enemy require to forget the player location")]
-    [SerializeField] private float forgetTime;
-    private float forgetTimeCounter = 0; //Counter of watchTime
-
     [Header("Patroll Properties")]
     [SerializeField] private Transform centrePoint;
 
