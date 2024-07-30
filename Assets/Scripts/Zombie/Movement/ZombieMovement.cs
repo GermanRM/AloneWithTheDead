@@ -44,6 +44,7 @@ public class ZombieMovement : MonoBehaviour
     [SerializeField] private float maxRandomMovementRange;
 
     bool goToNextPoint = true;
+    bool isFollowing = false;
 
     //Script References
     private FieldOfView FOV;
@@ -67,6 +68,10 @@ public class ZombieMovement : MonoBehaviour
 
     public Vector3 GetTargetPos() { return targetPos; }
 
+    public bool IsMoving(float minSpeed) { return agent.velocity.magnitude > minSpeed; }
+
+    public bool GetIsFollowing() { return isFollowing; }
+
     #endregion
 
     // Update is called once per frame
@@ -89,6 +94,7 @@ public class ZombieMovement : MonoBehaviour
             targetPos = GetDetectedPlayerPos();
             agent.speed = runSpeed;
             goToNextPoint = false;
+            isFollowing = true;
             agent.SetDestination(targetPos);
         }
         else
@@ -96,6 +102,7 @@ public class ZombieMovement : MonoBehaviour
             if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
             {               
                 agent.speed = walkSpeed;
+                isFollowing = false;
 
                 if (goToNextPoint) //done with path
                 {
