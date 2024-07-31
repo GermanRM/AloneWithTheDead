@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e8c6027337e07448e0dd91076647c6, type: 3}
   m_Name: KombatKnife
   m_EditorClassIdentifier: 
+  WeaponDamage: 4
+  weaponType: 0
+  WeaponReach: 4
+  WeaponAttackDelay: 1
+  AmmunitionClipSize: 1
   ItemPrefab: {fileID: 4678895676951015249, guid: ec62e62492da7974a844d1dfb07bd78d,
     type: 3}
   CanCancelReloadAnimationByShooting: 0
   CanCancelReloadAnimationByChangingItem: 0
   EnableAmmunitionUI: 0
-  AmmunitionClipSize: 8
   HandsPivotBoneTransformName: kombat knife
   ItemAnimatorTimeParameter: AnimationTime
   AttackAnimations:

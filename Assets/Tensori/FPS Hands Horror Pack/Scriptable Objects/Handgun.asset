@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e8c6027337e07448e0dd91076647c6, type: 3}
   m_Name: Handgun
   m_EditorClassIdentifier: 
+  WeaponDamage: 8
+  weaponType: 2
+  WeaponReach: 1
+  WeaponAttackDelay: 1
+  AmmunitionClipSize: 8
   ItemPrefab: {fileID: 4259820314644530675, guid: b8fc9818562b00146b2b1cd0c52b2560,
     type: 3}
   CanCancelReloadAnimationByShooting: 0
   CanCancelReloadAnimationByChangingItem: 0
   EnableAmmunitionUI: 1
-  AmmunitionClipSize: 8
   HandsPivotBoneTransformName: handgun
   ItemAnimatorTimeParameter: AnimationTime
   AttackAnimations:

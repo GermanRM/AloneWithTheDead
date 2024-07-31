@@ -74,8 +74,9 @@ namespace Tensori.FPSHandsHorrorPack
         private Vector2 movementInput = Vector2.zero;
         private Vector2 inputMouseDelta = Vector2.zero;
 
-        private CharacterController characterController = null;
         private Collider[] overlapColliders = new Collider[8];
+        private CharacterController characterController = null;
+     
 
         private void Awake()
         {
