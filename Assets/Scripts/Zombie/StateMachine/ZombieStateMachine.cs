@@ -12,6 +12,7 @@ public class ZombieStateMachine : MonoBehaviour
     [SerializeField] private bool IsMoving;
     [SerializeField] private bool IsFollowing;
     [SerializeField] private bool IsPatrolling;
+    [SerializeField] private bool IsBoring;
 
     private Animator stateMachine;
     private ZombieMovement zombieMovement;
@@ -30,6 +31,7 @@ public class ZombieStateMachine : MonoBehaviour
     public bool GetIsMoving() { return this.IsMoving; }
     public bool GetIsFollowing() {  return this.IsFollowing; }
     public bool GetIsPatrolling() { return this.IsPatrolling; }
+    public bool GetIsBoring() { return this.IsBoring; }
 
     #endregion
 
@@ -44,9 +46,11 @@ public class ZombieStateMachine : MonoBehaviour
         IsMoving = zombieMovement.IsMoving(0.2f);
         IsFollowing = zombieMovement.GetIsFollowing();
         IsPatrolling = IsMoving && !IsFollowing;
+        IsBoring = !IsMoving && !IsFollowing;
 
         stateMachine.SetBool("isMoving", IsMoving);
         stateMachine.SetBool("isFollowing", IsFollowing);
         stateMachine.SetBool("isPatrolling", IsPatrolling);
+        stateMachine.SetBool("isBoring", IsBoring);
     }
 }
