@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e8c6027337e07448e0dd91076647c6, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: 
+  ItemPrefab: {fileID: 9016199863953354979, guid: 7d1eacc19d031a84b8421112d860841c,
+    type: 3}
+  CanCancelReloadAnimationByShooting: 0
+  CanCancelReloadAnimationByChangingItem: 0
+  EnableAmmunitionUI: 1
+  AmmunitionClipSize: 4
+  HandsPivotBoneTransformName: shotgun
+  ItemAnimatorTimeParameter: AnimationTime
+  AttackAnimations:
+  - HandsAnimatorAttackStateName: Shotgun_Shoot
+    ItemAnimatorAttackStateName: Shotgun_Shoot
+    AttackAnimationLength: 0.6
+    AttackAnimationBlendTime: 0
+    AnimationEvents:
+    - EventMessage: CheckForDamage
+      EventPosition: 0.043
+  MovementBounceVelocityLimit: 3
+  MovementBounceSpringStiffness: 10
+  MovementBounceSpringDamping: 15
+  IdlePose:
+    HandsAnimationStateName: Shotgun_Idle
+    ItemAnimationStateName: Shotgun_Idle
+    AnimationStateBlendTime: 0.1
+    PositionOffset: {x: 0, y: -0.15, z: 0}
+    EulerOffset: {x: 0, y: 0, z: 0}
+    TransformSmoothDampTime: 0.1
+    MovementBounceStrength_Horizontal: 0.2
+    MovementBounceStrength_Vertical: 0.2
+    MovementBounceSpeed: 12
+  RunPose:
+    HandsAnimationStateName: Shotgun_Idle
+    ItemAnimationStateName: Shotgun_Idle
+    AnimationStateBlendTime: 0.1
+    PositionOffset: {x: 0.2, y: -0.1, z: -0.1}
+    EulerOffset: {x: 10, y: -45, z: 10}
+    TransformSmoothDampTime: 0.1
+    MovementBounceStrength_Horizontal: 0.3
+    MovementBounceStrength_Vertical: 0.3
+    MovementBounceSpeed: 16
+  AimPose:
+    HandsAnimationStateName: Shotgun_Idle
+    ItemAnimationStateName: Shotgun_Idle
+    AnimationStateBlendTime: 0.1
+    PositionOffset: {x: -0.116, y: -0.078, z: -0.04}
+    EulerOffset: {x: 0, y: 0, z: 0}
+    TransformSmoothDampTime: 0.1
+    MovementBounceStrength_Horizontal: 0.08
+    MovementBounceStrength_Vertical: 0.06
+    MovementBounceSpeed: 12
+  ReloadPose:
+    HandsAnimationStateName: Shotgun_Reload
+    ItemAnimationStateName: Shotgun_Reload
+    AnimationStateBlendTime: 0.1
+    PositionOffset: {x: 0, y: -0.1, z: 0}
+    EulerOffset: {x: 10.95, y: 2.33, z: 0}
+    TransformSmoothDampTime: 0.1
+    MovementBounceStrength_Horizontal: 0.1
+    MovementBounceStrength_Vertical: 0.1
+    MovementBounceSpeed: 12
+    AnimationLength: 5
+    AnimationEvents:
+    - EventMessage: ReloadOne
+      EventPosition: 0.21
+    - EventMessage: ReloadOne
+      EventPosition: 0.343
+    - EventMessage: ReloadLoopEnd
+      EventPosition: 0.767
+  EquipPose:
+    HandsAnimationStateName: Shotgun_Idle
+    ItemAnimationStateName: Shotgun_Idle
+    AnimationStateBlendTime: 0.1
+    PositionOffset: {x: -0.2, y: -0.5, z: -0.2}
+    EulerOffset: {x: 30, y: -5, z: 60}
+    TransformSmoothDampTime: 0.1
+    MovementBounceStrength_Horizontal: 1
+    MovementBounceStrength_Vertical: 1
+    MovementBounceSpeed: 12
+    AnimationLength: 0.8
+    AnimationEvents: []
+  UnequipPose:
+    HandsAnimationStateName: Shotgun_Idle
+    ItemAnimationStateName: Shotgun_Idle
+    AnimationStateBlendTime: 0.1
+    PositionOffset: {x: 0.2, y: -0.6, z: -0.1}
+    EulerOffset: {x: 30, y: 10, z: -100}
+    TransformSmoothDampTime: 0.1
+    MovementBounceStrength_Horizontal: 1
+    MovementBounceStrength_Vertical: 1
+    MovementBounceSpeed: 12
+    AnimationLength: 0.5
+    AnimationEvents: []
