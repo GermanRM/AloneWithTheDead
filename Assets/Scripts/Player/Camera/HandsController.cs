@@ -70,6 +70,8 @@ public class HandsController : MonoBehaviour
     {
         playerControls = new PlayerControls();
         playerControls.Interactions.Enable();
+
+        handsParentTransform = Camera.main.transform;
     }
 
     private void LateUpdate()

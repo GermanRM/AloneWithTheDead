@@ -263,12 +263,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5850848480857029925, guid: 80586482cc5342847bca9543709f79fe,
         type: 3}
-      propertyPath: heldItem
-      value: 
-      objectReference: {fileID: 11400000, guid: 08c0207428c9c954e87745ef79e2ec44,
-        type: 2}
-    - target: {fileID: 5850848480857029925, guid: 80586482cc5342847bca9543709f79fe,
-        type: 3}
       propertyPath: handsAnimator
       value: 
       objectReference: {fileID: 2102062048}
