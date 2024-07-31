@@ -1,47 +1,79 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PopupInstructionGame : MonoBehaviour
 {
+    public GameObject popup; // Asigna el objeto Popup aquí
+    public Button acceptButton; // Asigna el botón Aceptar aquí
+    private CanvasGroup canvasGroup;
+    private Animator animator; // Añadir Animator
 
-    [Header("Assign the GameObject that contains the message below")]
-    public GameObject messageContainer;
-
-    int storedData = 0;
-
-    [Header("Define a unique name to store your data")]
-    public string dataStoredName = "PopupManager";//Use the name you like for saving data
-
-    [Header("Check the box below to delete stored data")]
-    [SerializeField]
-    bool deleteStoredDataInEditor = false;
-
-    void Awake()
+    void Start()
     {
-        storedData = PlayerPrefs.GetInt(dataStoredName,0);
-
-        if (messageContainer != null)
+        if (popup != null)
         {
-            messageContainer.SetActive(storedData == 0);
+            canvasGroup = popup.GetComponent<CanvasGroup>();
+            animator = popup.GetComponent<Animator>(); // Obtener el Animator
+            popup.SetActive(false);
+            StartCoroutine(ShowPopupAfterDelay());
+            acceptButton.onClick.AddListener(HidePopup);
         }
         else
         {
-            Debug.Log("There is no GameObject assigned in the messageContainer variable in inspector");
+            Debug.LogError("Popup GameObject no asignado en el inspector.");
         }
-
-        PlayerPrefs.SetInt(dataStoredName, 1);
     }
 
-
-    private void OnValidate()
+    IEnumerator ShowPopupAfterDelay()
     {
-        if (deleteStoredDataInEditor)
-        {
-            deleteStoredDataInEditor = false;
-            PlayerPrefs.DeleteKey(dataStoredName);
-            Debug.Log("Data deleted, message will appear next session");
-        }
+        yield return new WaitForSeconds(3f);
+        popup.SetActive(true);
+        StartCoroutine(FadeIn());
     }
 
+    IEnumerator FadeIn()
+    {
+        float duration = 0.5f;
+        float currentTime = 0f;
+        
+        while (currentTime <= duration)
+        {
+            currentTime += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(0, 1, currentTime / duration);
+            yield return null;
+        }
+        Time.timeScale = 0f; // Pausar el juego
+        StartCoroutine(HidePopupAfterDelay());
+    }
+
+    IEnumerator HidePopupAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(10f); // Esperar 10 segundos en tiempo real
+        animator.SetBool("IsFadingOut", true); // Activar el parámetro de fade out
+    }
+
+    IEnumerator FadeOut()
+    {
+        float duration = 0.5f;
+        float currentTime = 0f;
+
+        while (currentTime <= duration)
+        {
+            currentTime += Time.unscaledDeltaTime;
+            canvasGroup.alpha = Mathf.Lerp(1, 0, currentTime / duration);
+            yield return null;
+        }
+        popup.SetActive(false);
+        Time.timeScale = 1f; // Reanudar el juego
+        animator.SetBool("IsFadingOut", false); // Reiniciar el parámetro de fade out
+    }
+
+    void HidePopup()
+    {
+        StopAllCoroutines(); // Detener corutinas en curso
+        StartCoroutine(FadeOut());
+        Time.timeScale = 1f; // Reanudar el juego
+        acceptButton.onClick.RemoveListener(HidePopup);
+    }
 }
