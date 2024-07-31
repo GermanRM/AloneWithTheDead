@@ -7,7 +7,21 @@ public class ZombieAnimation : MonoBehaviour
     [Header("Script References")]
     [SerializeField] private Animator animator;
     [SerializeField] private ZombieStateMachine stateMachine;
-    
+    [SerializeField] private ZombieCombat combat;
+
+    private void OnEnable()
+    {
+        combat.OnZombieAttack += OnZombieAttacks;
+        combat.OnZombieDamageTaken += OnZombieGetHurts;
+        combat.OnZombieDead += OnZombieDie;
+    }
+
+    private void OnDisable()
+    {
+        combat.OnZombieAttack -= OnZombieAttacks;
+        combat.OnZombieDamageTaken -= OnZombieGetHurts;
+        combat.OnZombieDead -= OnZombieDie;
+    }
 
     public void IdleManager()
     {
@@ -36,4 +50,32 @@ public class ZombieAnimation : MonoBehaviour
     {
         animator.SetBool("IsBoring", stateMachine.GetIsBoring());
     }
+
+    #region Event Triggers
+
+    /// <summary>
+    /// Triggers when zombie do a attack
+    /// </summary>
+    private void OnZombieAttacks()
+    {
+
+    }
+
+    /// <summary>
+    /// Triggers when zombie get hurts
+    /// </summary>
+    private void OnZombieGetHurts()
+    {
+
+    }
+
+    /// <summary>
+    /// Triggers when zombie die
+    /// </summary>
+    private void OnZombieDie()
+    {
+
+    }
+
+    #endregion
 }

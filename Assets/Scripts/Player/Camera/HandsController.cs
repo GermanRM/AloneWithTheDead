@@ -70,6 +70,8 @@ public class HandsController : MonoBehaviour
     {
         playerControls = new PlayerControls();
         playerControls.Interactions.Enable();
+
+        handsParentTransform = Camera.main.transform;
     }
 
     private void LateUpdate()
@@ -127,6 +129,8 @@ public class HandsController : MonoBehaviour
         if (heldItem == null)
             return;
 
+        IsAiming = playerStats.isAiming;
+
         /*
         if (playerControls.Interactions.Attack.WasPerformedThisFrame() && playerStats.CanShoot())
         {
@@ -150,8 +154,8 @@ public class HandsController : MonoBehaviour
             reloadCoroutine = StartCoroutine(Coroutine_UpdateAnimatedPose(heldItem.ReloadPose));
         }*/
         
-        if (playerControls.Interactions.Aim.WasPerformedThisFrame()) IsAiming = true;
-        if (playerControls.Interactions.Aim.WasReleasedThisFrame()) IsAiming = false;
+        //if (playerControls.Interactions.Aim.WasPerformedThisFrame()) IsAiming = true;
+        //if (playerControls.Interactions.Aim.WasReleasedThisFrame()) IsAiming = false;
     }
 
     public void ApplyAttackAnim()

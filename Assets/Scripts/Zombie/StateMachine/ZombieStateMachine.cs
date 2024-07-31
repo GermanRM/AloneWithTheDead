@@ -14,6 +14,9 @@ public class ZombieStateMachine : MonoBehaviour
     [SerializeField] private bool IsPatrolling;
     [SerializeField] private bool IsBoring;
 
+    [Space]
+    [SerializeField] private List<GameObject> zombieModels = new List<GameObject>();
+
     private Animator stateMachine;
     private ZombieMovement zombieMovement;
 
@@ -21,6 +24,18 @@ public class ZombieStateMachine : MonoBehaviour
     {
         stateMachine = GetComponent<Animator>();
         zombieMovement = GetComponent<ZombieMovement>();
+
+        InitializeModels();
+    }
+
+    private void InitializeModels()
+    {
+        foreach (var model in zombieModels)
+        {
+            model.SetActive(false);
+        }
+
+        zombieModels[Random.Range(0, zombieModels.Count)].SetActive(true);
     }
 
     #region Getter / Setter

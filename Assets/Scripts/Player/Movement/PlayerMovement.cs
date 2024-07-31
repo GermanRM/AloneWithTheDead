@@ -145,8 +145,7 @@ public class PlayerMovement : MonoBehaviour
         isCrouchInputDown = playerControl.Movement.Crouch.IsInProgress();
         isJumpInputDown = playerControl.Movement.Jump.IsInProgress();
 
-        isRunning = isRunInputDown;
-
+        //isRunning = isRunInputDown;
 
         // cancel crouch by running
         if (isRunning && isCrouching)
@@ -232,8 +231,11 @@ public class PlayerMovement : MonoBehaviour
 
         float moveSpeed = moveSpeedWalk;
 
+        isRunning = isRunInputDown && isMovingForward(movementInput);
+
         if (isRunning)
             moveSpeed = moveSpeedRun;
+
         if (isCrouching)
             moveSpeed = moveSpeedCrouch;
 
@@ -274,6 +276,16 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Checkers
+
+    /// <summary>
+    /// Detect if player is moving forward
+    /// </summary>
+    /// <param name="movement"></param>
+    /// <returns></returns>
+    public bool isMovingForward(Vector2 movement)
+    {
+        return movement.y > 0 && characterController.velocity.magnitude > 1f;
+    }
 
     /// <summary>
     /// Detect if player is grounded

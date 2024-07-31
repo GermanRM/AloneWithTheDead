@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponDamage: 4
   weaponType: 0
-  WeaponReach: 4
-  WeaponAttackDelay: 1
+  WeaponReach: 1.5
+  WeaponAttackDelay: 0.3
   AmmunitionClipSize: 1
   ItemPrefab: {fileID: 4678895676951015249, guid: ec62e62492da7974a844d1dfb07bd78d,
     type: 3}

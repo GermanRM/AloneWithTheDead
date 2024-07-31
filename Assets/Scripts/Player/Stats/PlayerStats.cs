@@ -15,10 +15,11 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private bool canSwitchWeapon = true;
     [SerializeField] private float weaponSwitchDelay;
     [Space]
-    [SerializeField] private Transform meleePos;
-    [SerializeField] private Vector3 meleeBoxSize;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask defaultLayer;
+
+    [Header("Player Aim Properties")]
+    public bool isAiming;
 
     [Header("Ammo Properties")]
     [SerializeField] private int ammoInCartridge;
@@ -35,8 +36,12 @@ public class PlayerStats : MonoBehaviour
 
     [Header("Script References")]
     [SerializeField] private HandsController handsController;
+    [SerializeField] private PlayerMovement playerMovement;
 
     #region Events 
+
+    public event Action<float> OnPlayerDamaged;
+    public event Action<float> OnPlayerHealed;
 
     public event Action<FPSItem> OnPlayerAttack;
     public event Action<FPSItem> OnPlayerAttackAnimStart;
@@ -73,10 +78,29 @@ public class PlayerStats : MonoBehaviour
         Reload();
     }
 
+    #region Player Health
+
+    public void DamagePlayer(float damage)
+    {
+        playerHealth -= damage;
+        OnPlayerDamaged?.Invoke(damage);
+    }
+
+    public void HealPlayer(float heal)
+    {
+        playerHealth += heal;
+        OnPlayerHealed?.Invoke(heal);
+    }
+
+    #endregion
+
     #region Shoot
 
     private void Shoot()
     {
+        if (playerControls.Interactions.Aim.WasPerformedThisFrame() && !playerMovement.IsRunningAndMoving()) isAiming = true;
+        if (playerControls.Interactions.Aim.WasReleasedThisFrame() && isAiming) isAiming = false;
+
         if (playerControls.Interactions.Attack.WasPerformedThisFrame())
         {
             if (actualItem.weaponType == FPSItem.WeaponType.Melee)
@@ -88,9 +112,14 @@ public class PlayerStats : MonoBehaviour
                     OnPlayerAttack?.Invoke(actualItem); //Invoke event
 
                     //Do the boxcast or spherecast thing
-                    if (Physics.BoxCast(Camera.main.transform.position, meleeBoxSize, transform.forward, out RaycastHit hit, transform.rotation, actualItem.WeaponReach, defaultLayer | enemyLayer))
+                    if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, actualItem.WeaponReach, (defaultLayer | enemyLayer)))
                     {
                         //Do the damage, etc
+
+                        Debug.Log(hit.collider.gameObject.name);
+                        ZombieHitbox hitbox = hit.collider.gameObject.GetComponent<ZombieHitbox>();
+
+                        if (hitbox != null) { hitbox.ApplyDamageInRegion(actualDamage); }
                     }
                 }
             }
@@ -107,6 +136,11 @@ public class PlayerStats : MonoBehaviour
                     if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, Mathf.Infinity, (defaultLayer | enemyLayer)))
                     {
                         //do the damage, etc
+                        Debug.Log(hit.collider.gameObject.name);
+
+                        ZombieHitbox hitbox = hit.collider.gameObject.GetComponent<ZombieHitbox>();
+
+                        if (hitbox != null) { hitbox.ApplyDamageInRegion(actualDamage); }
                     }
                 }
             }
@@ -252,11 +286,6 @@ public class PlayerStats : MonoBehaviour
     #endregion
 
     #region Debug
-
-    private void OnDrawGizmos()
-    {
-        if (actualItem.weaponType == FPSItem.WeaponType.Melee) ExtDebug.DrawBoxCastBox(Camera.main.transform.position, meleeBoxSize, Camera.main.transform.rotation, Camera.main.transform.forward, actualItem.WeaponReach, Color.red);
-    }
 
     #endregion
 }

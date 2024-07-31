@@ -1,13 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using Tensori.FPSHandsHorrorPack;
 using UnityEngine;
 
 public class PlayerInteractions : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    [Header("Script References")]
+    [SerializeField] private PlayerStats stats;
+
+    private void OnEnable()
     {
-        
+        stats.OnPlayerAttack += OnPlayerAttacks;
+    }
+
+    private void OnDisable()
+    {
+        stats.OnPlayerAttack -= OnPlayerAttacks;
     }
 
     // Update is called once per frame
@@ -15,4 +24,13 @@ public class PlayerInteractions : MonoBehaviour
     {
         
     }
+
+    #region Combat
+
+    private void OnPlayerAttacks(FPSItem item)
+    {
+
+    }
+
+    #endregion
 }
