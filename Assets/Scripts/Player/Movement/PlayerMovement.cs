@@ -91,6 +91,8 @@ public class PlayerMovement : MonoBehaviour
 
     public CharacterController GetCharacterController() { return characterController; }
 
+    public bool GetIsRunning() { return isRunning; }
+
     public float GetMoveVelocityMagnitude()
     {
         if (isGrounded() == false)
@@ -276,6 +278,11 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Checkers
+
+    public bool IsMoving(float minimunMove)
+    {
+        return characterController.velocity.sqrMagnitude > minimunMove;
+    }
 
     /// <summary>
     /// Detect if player is moving forward
