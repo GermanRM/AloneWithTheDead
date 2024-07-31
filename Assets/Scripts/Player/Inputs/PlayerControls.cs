@@ -189,12 +189,30 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Attack"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""62272fed-8e89-4151-b41f-fc34ff13b680"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Value"",
+                    ""id"": ""00e47f7a-b560-4fe0-bccf-ce1515d6faf4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Value"",
+                    ""id"": ""924a4af5-5101-4439-ae00-1aeb59c39df8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -208,6 +226,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3169047-5555-440a-ad5c-a645e448f8bd"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90688fa8-072e-465e-a233-cd45b77af862"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -215,6 +255,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""name"": ""Inventory"",
             ""id"": ""e8c5dbde-1942-466d-9cc5-c43e174f45bd"",
             ""actions"": [
+                {
+                    ""name"": ""Knife"",
+                    ""type"": ""Button"",
+                    ""id"": ""21b0c682-38ca-4c9d-a1ab-0e528387bf1b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
                 {
                     ""name"": ""Pistol"",
                     ""type"": ""Button"",
@@ -225,20 +274,20 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Knife"",
-                    ""type"": ""Button"",
-                    ""id"": ""21b0c682-38ca-4c9d-a1ab-0e528387bf1b"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Flashlight"",
+                    ""type"": ""Value"",
+                    ""id"": ""8a5f6d64-7d1c-43d6-a746-834ba5dce8ef"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""5a139389-283a-469f-aef9-25898d4a347a"",
-                    ""path"": ""<Keyboard>/1"",
+                    ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -249,11 +298,22 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""050b9ca6-9df5-424c-bc6d-fc36948d9500"",
-                    ""path"": ""<Keyboard>/2"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Knife"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""61959c76-cc85-4e6a-aecd-819cd6f52a10"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Flashlight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -274,10 +334,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Interactions
         m_Interactions = asset.FindActionMap("Interactions", throwIfNotFound: true);
         m_Interactions_Attack = m_Interactions.FindAction("Attack", throwIfNotFound: true);
+        m_Interactions_Aim = m_Interactions.FindAction("Aim", throwIfNotFound: true);
+        m_Interactions_Reload = m_Interactions.FindAction("Reload", throwIfNotFound: true);
         // Inventory
         m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
-        m_Inventory_Pistol = m_Inventory.FindAction("Pistol", throwIfNotFound: true);
         m_Inventory_Knife = m_Inventory.FindAction("Knife", throwIfNotFound: true);
+        m_Inventory_Pistol = m_Inventory.FindAction("Pistol", throwIfNotFound: true);
+        m_Inventory_Flashlight = m_Inventory.FindAction("Flashlight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -456,11 +519,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Interactions;
     private List<IInteractionsActions> m_InteractionsActionsCallbackInterfaces = new List<IInteractionsActions>();
     private readonly InputAction m_Interactions_Attack;
+    private readonly InputAction m_Interactions_Aim;
+    private readonly InputAction m_Interactions_Reload;
     public struct InteractionsActions
     {
         private @PlayerControls m_Wrapper;
         public InteractionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Attack => m_Wrapper.m_Interactions_Attack;
+        public InputAction @Aim => m_Wrapper.m_Interactions_Aim;
+        public InputAction @Reload => m_Wrapper.m_Interactions_Reload;
         public InputActionMap Get() { return m_Wrapper.m_Interactions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -473,6 +540,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @Aim.started += instance.OnAim;
+            @Aim.performed += instance.OnAim;
+            @Aim.canceled += instance.OnAim;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         private void UnregisterCallbacks(IInteractionsActions instance)
@@ -480,6 +553,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @Aim.started -= instance.OnAim;
+            @Aim.performed -= instance.OnAim;
+            @Aim.canceled -= instance.OnAim;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         public void RemoveCallbacks(IInteractionsActions instance)
@@ -501,14 +580,16 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     // Inventory
     private readonly InputActionMap m_Inventory;
     private List<IInventoryActions> m_InventoryActionsCallbackInterfaces = new List<IInventoryActions>();
-    private readonly InputAction m_Inventory_Pistol;
     private readonly InputAction m_Inventory_Knife;
+    private readonly InputAction m_Inventory_Pistol;
+    private readonly InputAction m_Inventory_Flashlight;
     public struct InventoryActions
     {
         private @PlayerControls m_Wrapper;
         public InventoryActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Pistol => m_Wrapper.m_Inventory_Pistol;
         public InputAction @Knife => m_Wrapper.m_Inventory_Knife;
+        public InputAction @Pistol => m_Wrapper.m_Inventory_Pistol;
+        public InputAction @Flashlight => m_Wrapper.m_Inventory_Flashlight;
         public InputActionMap Get() { return m_Wrapper.m_Inventory; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -518,22 +599,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_InventoryActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_InventoryActionsCallbackInterfaces.Add(instance);
-            @Pistol.started += instance.OnPistol;
-            @Pistol.performed += instance.OnPistol;
-            @Pistol.canceled += instance.OnPistol;
             @Knife.started += instance.OnKnife;
             @Knife.performed += instance.OnKnife;
             @Knife.canceled += instance.OnKnife;
+            @Pistol.started += instance.OnPistol;
+            @Pistol.performed += instance.OnPistol;
+            @Pistol.canceled += instance.OnPistol;
+            @Flashlight.started += instance.OnFlashlight;
+            @Flashlight.performed += instance.OnFlashlight;
+            @Flashlight.canceled += instance.OnFlashlight;
         }
 
         private void UnregisterCallbacks(IInventoryActions instance)
         {
-            @Pistol.started -= instance.OnPistol;
-            @Pistol.performed -= instance.OnPistol;
-            @Pistol.canceled -= instance.OnPistol;
             @Knife.started -= instance.OnKnife;
             @Knife.performed -= instance.OnKnife;
             @Knife.canceled -= instance.OnKnife;
+            @Pistol.started -= instance.OnPistol;
+            @Pistol.performed -= instance.OnPistol;
+            @Pistol.canceled -= instance.OnPistol;
+            @Flashlight.started -= instance.OnFlashlight;
+            @Flashlight.performed -= instance.OnFlashlight;
+            @Flashlight.canceled -= instance.OnFlashlight;
         }
 
         public void RemoveCallbacks(IInventoryActions instance)
@@ -565,10 +652,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IInteractionsActions
     {
         void OnAttack(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
     public interface IInventoryActions
     {
-        void OnPistol(InputAction.CallbackContext context);
         void OnKnife(InputAction.CallbackContext context);
+        void OnPistol(InputAction.CallbackContext context);
+        void OnFlashlight(InputAction.CallbackContext context);
     }
 }

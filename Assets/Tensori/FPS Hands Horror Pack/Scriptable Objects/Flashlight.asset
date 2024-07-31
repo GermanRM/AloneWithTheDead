@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e8c6027337e07448e0dd91076647c6, type: 3}
   m_Name: Flashlight
   m_EditorClassIdentifier: 
+  WeaponDamage: 0
+  weaponType: 1
+  WeaponReach: 0
+  WeaponAttackDelay: 0
+  AmmunitionClipSize: 8
   ItemPrefab: {fileID: 8271269421579297201, guid: 1b6afc0bd4c84ba488888d67c0a19349,
     type: 3}
   CanCancelReloadAnimationByShooting: 0
   CanCancelReloadAnimationByChangingItem: 0
   EnableAmmunitionUI: 0
-  AmmunitionClipSize: 8
   HandsPivotBoneTransformName: flashlight
   ItemAnimatorTimeParameter: AnimationTime
   AttackAnimations: []

@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e8c6027337e07448e0dd91076647c6, type: 3}
   m_Name: Fists
   m_EditorClassIdentifier: 
+  WeaponDamage: 2
+  weaponType: 0
+  WeaponReach: 3
+  WeaponAttackDelay: 1
+  AmmunitionClipSize: 8
   ItemPrefab: {fileID: 0}
   CanCancelReloadAnimationByShooting: 0
   CanCancelReloadAnimationByChangingItem: 0
   EnableAmmunitionUI: 0
-  AmmunitionClipSize: 8
   HandsPivotBoneTransformName: WeaponPivot
   ItemAnimatorTimeParameter: AnimationTime
   AttackAnimations:

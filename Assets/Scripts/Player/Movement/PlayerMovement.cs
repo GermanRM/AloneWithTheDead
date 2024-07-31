@@ -3,33 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.SocialPlatforms;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement Properties")]
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float runSpeed;
-    [SerializeField] private float crouchSpeed;
-    [SerializeField] private float moveSpeedChange;
-    [SerializeField] private float actualSpeed;
-    [SerializeField] private float maxSpeed;
-    [SerializeField] private bool isSprinting;
-    private MovementState movementState;
+    [Header("Input Settings")]
+    private bool isRunInputDown = false;
+    private bool isCrouchInputDown = false;
+    private bool isJumpInputDown = false;
+    [SerializeField] private bool useToggleInputForSprint = false;
+    [SerializeField] private bool useToggleInputForCrouch = true;
 
-    [Header("Jump Properties")]
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float jumpCooldown;
-    [SerializeField] private bool canJump;
-    [SerializeField] bool _jump;
-
-    [Header("Crouch Properties")]
-    [SerializeField] private Vector3 crouchScale;
-    [SerializeField] private float crouchTime;
-    [SerializeField] private bool isCrouching;
-    [SerializeField] private float crouchCooldown;
-    [SerializeField] private bool canCrouch;
-    private Vector3 defaultLocalScale;
+    [Header("Movement Settings")]
+    [SerializeField, Min(0f)] private float moveSpeedWalk = 1.9f;
+    [SerializeField, Min(0f)] private float moveSpeedRun = 3.5f;
+    [SerializeField, Min(0f)] private float moveSpeedCrouch = 1.6f;
 
     [Header("GroundCheck Properties")]
     [SerializeField] private Transform groundCheck;
@@ -37,18 +26,42 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float groundRayDistance;
     [SerializeField] private LayerMask groundLayer;
 
-    [Header("Gravity Settings")]
-    [SerializeField] private float gravity;
-    [SerializeField] Vector3 velocity;
-    [SerializeField] private float airControlReducer;
-    bool wasInAir = false;
+    [Header("Crouch Settings")]
+    [SerializeField] private float crouchColliderHeight = 1.0f;
+    [SerializeField, Min(0f)] private float crouchSmoothTime = 0.2f;
+    [SerializeField, Min(0f)] private float standUpSmoothTime = 0.15f;
+    [SerializeField] private LayerMask aboveFreeSpaceBlockingLayers;
 
-    [Header("Debug")]
-    [SerializeField] private Vector2 movementInput;
-    [SerializeField] private Vector3 moveDirection;
-    [SerializeField] private bool Grounded;
-    [SerializeField] private float magnitude;
-    [SerializeField] private bool Moving;
+    [Header("Jump Settings")]
+    [SerializeField] private bool cancelCrouchWithJump = true;
+    [SerializeField, Min(0)] private float minJumpTime = 0.1f;
+    [SerializeField, Min(0)] private float maxJumpTime = 0.3f;
+    [SerializeField, Min(0)] private float jumpForce = 11.0f;
+    [SerializeField] private AnimationCurve jumpForceCurveOverJumpTime = new AnimationCurve() { keys = new Keyframe[] { new Keyframe { time = 0, value = 1 }, new Keyframe() { time = 1, value = 0 }, } };
+    [SerializeField, Min(0)] private float jumpCooldown = 0.4f;
+    [SerializeField] private float fallGravity = Physics.gravity.y;
+
+    [Header("Object References")]
+    [SerializeField] private Transform cameraTransform = null;
+
+    private bool isRunning = false;
+
+    private bool isCrouching = false;
+    private bool isCrouchingUnderObject = false;
+
+    private bool isJumping = false;
+    private float jumpStartTime;
+    private float jumpVelocity = 0f;
+
+    private float cameraPitch;
+    private float cameraYaw;
+
+    private float defaultColliderHeight;
+    private float colliderHeightVelocity;
+
+    private Vector2 movementInput = Vector2.zero;
+
+    private Collider[] overlapColliders = new Collider[8];
 
     #region Events
 
@@ -59,48 +72,62 @@ public class PlayerMovement : MonoBehaviour
 
     #region References
 
-    private CharacterController controller;
+    private CharacterController characterController;
     private PlayerControls playerControl;
-
-    #endregion
-
-    #region Getter / Setter
-
-    /// <summary>
-    /// Get is Sprinting Status
-    /// </summary>
-    /// <returns></returns>
-    public bool GetIsSprinting() { return isSprinting; }
-
-    public MovementState GetMovementState() { return movementState; }
-
-    public CharacterController GetPlayerCC() { return controller; }
 
     #endregion
 
     private void Awake()
     {
-        controller = GetComponent<CharacterController>();
+        characterController = GetComponent<CharacterController>();
         playerControl = new PlayerControls();
         playerControl.Movement.Enable();
 
-        defaultLocalScale = transform.localScale;
+        cameraTransform = Camera.main.transform;
+        defaultColliderHeight = characterController.height;
     }
 
-    void Update()
-    {
-        GetInputs();
-        Movement();
-        Jump();
-        Crouch();
-        Sprint();
-        SpeedManager();
-        ApplyGravity();
+    #region Getter / Setter
 
-        //Debug
-        magnitude = controller.velocity.magnitude;
-        Moving = isMoving();
-        Grounded = isGrounded();
+    public CharacterController GetCharacterController() { return characterController; }
+
+    public float GetMoveVelocityMagnitude()
+    {
+        if (isGrounded() == false)
+            return 0f;
+
+        var velocity = characterController.velocity;
+        velocity.y = 0f;
+        return velocity.magnitude;
+    }
+
+    public bool IsCrouching()
+    {
+        if (isGrounded() == false)
+            return false;
+
+        return isCrouching;
+    }
+
+    public bool IsRunningAndMoving()
+    {
+        Vector3 velocity = characterController.velocity;
+        velocity.y = 0f;
+        return isRunning && velocity.sqrMagnitude > 0.1f;
+    }
+
+    #endregion
+
+    private void Update()
+    {
+        isCrouchingUnderObject = false;
+
+        if (isCrouching)
+            CheckForAboveObject();
+
+        GetInputs();
+        UpdateColliderHeight();
+        UpdateTransform();
     }
 
     #region Inputs
@@ -110,166 +137,143 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void GetInputs()
     {
-        movementInput = playerControl.Movement.Movement.ReadValue<Vector2>();
+        bool runHeldPreviously = isRunInputDown;
+        bool crouchHeldPreviously = isCrouchInputDown;
+        bool jumpHeldPreviously = isJumpInputDown;
 
-        _jump = playerControl.Movement.Jump.IsInProgress();
+        isRunInputDown = playerControl.Movement.Sprint.IsInProgress();
+        isCrouchInputDown = playerControl.Movement.Crouch.IsInProgress();
+        isJumpInputDown = playerControl.Movement.Jump.IsInProgress();
+
+        isRunning = isRunInputDown;
+
+
+        // cancel crouch by running
+        if (isRunning && isCrouching)
+            isCrouching = false;
+
+        // update current crouch state
+        if (useToggleInputForCrouch)
+        {
+            if (crouchHeldPreviously == false && isCrouchInputDown)
+                isCrouching = !isCrouching;
+        }
+        else
+            isCrouching = isCrouchInputDown;
+
+        // override crouch if under object
+        if (isCrouchingUnderObject)
+            isCrouching = true;
+
+        // cancel running by crouch
+        if (isCrouching && isRunning)
+            isRunning = false;
+
+        UpdateJumpState(jumpHeldPreviously);
+
+        movementInput = playerControl.Movement.Movement.ReadValue<Vector2>();
+        movementInput = Vector2.ClampMagnitude(movementInput, 1.0f);
+    }
+
+    private void UpdateJumpState(bool jumpHeldPreviously)
+    {
+        if (isJumpInputDown)
+        {
+            if (isCrouching)
+            {
+                // jump button pressed this frame and can stand up
+                if (jumpHeldPreviously == false && cancelCrouchWithJump && isCrouchingUnderObject == false)
+                    isCrouching = false;
+            }
+            else
+            {
+                if (isJumping)
+                {
+                    float timeSpentJumping = Time.time - jumpStartTime;
+
+                    if (timeSpentJumping > maxJumpTime)
+                        isJumping = false;
+                }
+                else
+                {
+                    // jump started this frame
+                    if (jumpHeldPreviously == false && CanJump())
+                    {
+                        jumpStartTime = Time.time;
+                        isJumping = true;
+                        jumpVelocity = jumpForce;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (isJumping)
+            {
+                float timeSpentJumping = Time.time - jumpStartTime;
+                if (timeSpentJumping >= minJumpTime)
+                    isJumping = false;
+            }
+        }
     }
 
     #endregion
 
     #region Movement
 
-    private void Sprint()
+    private void UpdateTransform()
     {
-        if (playerControl.Movement.Sprint.IsPressed() && isMovingForward(movementInput))
-        {
-            if (isCrouching) return;
+        Vector3 cameraHorizontalForward = cameraTransform.forward;
+        cameraHorizontalForward.y = 0;
+        cameraHorizontalForward.Normalize();
 
-            isSprinting = true;
-        }
-        else
-        {
-            isSprinting = false;
-        }
-    }
+        if (cameraHorizontalForward != Vector3.zero)
+            transform.forward = cameraHorizontalForward;
 
-    private void SpeedManager()
-    {
+        float moveSpeed = moveSpeedWalk;
+
+        if (isRunning)
+            moveSpeed = moveSpeedRun;
         if (isCrouching)
-        {
-            maxSpeed = crouchSpeed;
-            movementState = MovementState.crouching;
-            actualSpeed = Mathf.Lerp(actualSpeed, crouchSpeed, moveSpeedChange * Time.deltaTime);
-        }
-        else
-        {
-            if (isSprinting)
-            {
-                maxSpeed = runSpeed;
-                movementState = MovementState.sprinting;
-                actualSpeed = Mathf.Lerp(actualSpeed, runSpeed, moveSpeedChange * Time.deltaTime);
-            }
-            else
-            {
-                maxSpeed = walkSpeed;
-                movementState = MovementState.walking;
-                actualSpeed = Mathf.Lerp(actualSpeed, walkSpeed, moveSpeedChange * Time.deltaTime);
-            }
-        }
+            moveSpeed = moveSpeedCrouch;
+
+        Vector3 moveVector = Time.deltaTime * moveSpeed * (movementInput.x * transform.right + movementInput.y * transform.forward);
+        moveVector.y = Time.deltaTime * fallGravity;
+
+        ApplyJumpVelocity(ref moveVector);
+
+        characterController.Move(moveVector);
     }
 
-    private void Movement()
+    private void ApplyJumpVelocity(ref Vector3 moveVector)
     {
-        if (movementInput != Vector2.zero)
-        {
-            Vector2 movement = movementInput.normalized;
+        if (jumpVelocity <= 0)
+            return;
 
-            moveDirection = (transform.forward * movement.y + transform.right * movement.x) * actualSpeed;
+        float timeSpentJumping = Time.time - jumpStartTime;
+        float jumpTime = Mathf.Clamp01(timeSpentJumping / maxJumpTime);
+        float jumpForceScale = jumpForceCurveOverJumpTime.Evaluate(jumpTime);
 
-            if (isGrounded())
-            {
-                controller.Move(moveDirection * Time.deltaTime);
-            }
-            else
-            {
-                controller.Move(moveDirection * airControlReducer * Time.deltaTime);
-            }
-        }
+        jumpVelocity += Time.deltaTime * jumpForceScale * jumpForce;
+        jumpVelocity += Time.deltaTime * fallGravity;
+
+        if (jumpVelocity < 0)
+            jumpVelocity = 0;
+
+        moveVector.y += Time.deltaTime * jumpVelocity;
     }
 
-    private IEnumerator jumpCoroutine()
+    private void UpdateColliderHeight()
     {
-        yield return new WaitForSeconds(jumpCooldown);
-
-        canJump = true;
-    }
-
-    private void Jump()
-    {     
-        if (_jump && isGrounded() && canJump)
-        {
-            OnPlayerJump?.Invoke();
-            velocity.y = Mathf.Sqrt(jumpForce * -5f * gravity);
-            canJump = false;
-            _jump = false;
-
-            StartCoroutine(jumpCoroutine());
-        }
-    }
-
-    private void ApplyGravity()
-    {
-        if (isGrounded() && velocity.y < 1)
-        {
-            velocity.y = 0;
-        }
-        else
-        {
-            velocity.y += gravity * Time.deltaTime;
-            controller.Move(velocity * Time.deltaTime);
-        }
-
-        if (wasInAir && isGrounded())
-        {
-            OnPlayerLand?.Invoke();
-        }
-
-        wasInAir = !isGrounded();
-    }
-
-    private IEnumerator CrouchCoroutine()
-    {
-        yield return new WaitForSeconds(crouchCooldown);
-        canCrouch = true;
-    }
-
-    private void Crouch()
-    {
-        if (playerControl.Movement.Crouch.WasPressedThisFrame() && canCrouch)
-        {
-            isCrouching = true;
-            canCrouch = false;
-        }
-
-        if (playerControl.Movement.Crouch.WasReleasedThisFrame() && isCrouching)
-        {
-            isCrouching = false;
-
-            StartCoroutine(CrouchCoroutine());
-        }
-
-        if (isCrouching)
-        {
-            transform.localScale = Vector3.Lerp(transform.localScale, crouchScale, crouchTime * Time.deltaTime);
-        }
-        else
-        {
-            transform.localScale = Vector3.Lerp(transform.localScale, defaultLocalScale, crouchTime * Time.deltaTime);
-        }
+        float targetHeight = isCrouching ? crouchColliderHeight : defaultColliderHeight;
+        float smoothTime = isCrouching ? crouchSmoothTime : standUpSmoothTime;
+        characterController.height = Mathf.SmoothDamp(characterController.height, targetHeight, ref colliderHeightVelocity, smoothTime, float.MaxValue, Time.deltaTime);
+        characterController.center = new Vector3(0, 0.5f * characterController.height + characterController.stepOffset, 0);
     }
 
     #endregion
 
     #region Checkers
-
-    /// <summary>
-    /// Detect if player is moving forward
-    /// </summary>
-    /// <param name="movement"></param>
-    /// <returns></returns>
-    public bool isMovingForward(Vector2 movement)
-    {
-        return movement.y > 0 && controller.velocity.magnitude > 1f;
-    }
-
-    /// <summary>
-    /// Detect if player is moving
-    /// </summary>
-    /// <returns></returns>
-    public bool isMoving()
-    {      
-        return movementInput != Vector2.zero && controller.velocity.magnitude > 1;
-    }
 
     /// <summary>
     /// Detect if player is grounded
@@ -280,12 +284,55 @@ public class PlayerMovement : MonoBehaviour
         return gameObject.scene.GetPhysicsScene().BoxCast(groundCheck.position, groundCheckBoxSize, Vector3.down, out RaycastHit hit, Quaternion.identity, groundRayDistance, groundLayer);
     }
 
+    private bool CanJump()
+    {
+        if (Time.time - jumpStartTime < jumpCooldown)
+            return false;
+
+        return isCrouching == false && isGrounded();
+    }
+
+    private void CheckForAboveObject()
+    {
+        const float upCheckDistance = 0.05f;
+        const float checkRadiusReduceAmount = 0.02f;
+
+        float checkRadius = characterController.radius - checkRadiusReduceAmount;
+
+        Vector3 checkPosition = transform.position
+            + characterController.center
+            + new Vector3(0, characterController.height - checkRadius + upCheckDistance, 0);
+
+        int overlapCount = Physics.OverlapSphereNonAlloc(
+            checkPosition,
+            checkRadius,
+            overlapColliders,
+            aboveFreeSpaceBlockingLayers,
+            QueryTriggerInteraction.Ignore);
+
+        if (overlapCount == 0)
+            return;
+
+        for (int i = 0; i < overlapCount; i++)
+        {
+            var overlapCollider = overlapColliders[i];
+
+            if (overlapCollider.transform.GetInstanceID() == characterController.transform.GetInstanceID())
+                continue;
+
+            isCrouchingUnderObject = true;
+            return;
+        }
+    }
+
     #endregion
 
     #region Debug
+
     private void OnDrawGizmos()
     {
         ExtDebug.DrawBoxCastBox(groundCheck.position, groundCheckBoxSize, Quaternion.identity, Vector3.down, groundRayDistance, isGrounded() ? Color.red : Color.green);
     }
+
     #endregion
 }
