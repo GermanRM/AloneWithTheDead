@@ -9,6 +9,31 @@ namespace Tensori.FPSHandsHorrorPack
     [CreateAssetMenu(menuName = "Tensori/FPSHorrorPack/New FPS Item Asset")]
     public class FPSItem : ScriptableObject
     {
+        public enum WeaponType
+        {
+            Melee,
+            Utilitie,
+            Fire
+        }
+
+        [Header("Weapon Stats")]
+        [Tooltip("Damage of the weapon")]
+        [Min(1)]public float WeaponDamage;
+
+        [Tooltip("Type of the weapon")]
+        public WeaponType weaponType;
+
+        [Tooltip("Reach of the weapon (if is melee)")]
+        [Min(1)] public float WeaponReach;
+
+        [Tooltip("Attack delay of the weapon")]
+        public float WeaponAttackDelay;
+
+        [Tooltip("Max Ammo in the cartridge")]
+        [Min(1)] public int AmmunitionClipSize = 8;
+
+        [Space]
+
         [Tooltip("This item object is instantiated as a child object to the desired pivot bone inside the active FPS hands' transform hierarchy.\nPlease set the name of desired parent bone to the 'Hands Pivot Bone Transform Name' parameter.")]
         public GameObject ItemPrefab = null;
 
@@ -17,7 +42,6 @@ namespace Tensori.FPSHandsHorrorPack
         public bool CanCancelReloadAnimationByChangingItem = true;
         [Space]
         public bool EnableAmmunitionUI = false;
-        [Min(1)] public int AmmunitionClipSize = 8;
 
         [Header("Animator Settings")]
         [Tooltip("Name of the target parent transform inside hands game object transform hierarchy")]

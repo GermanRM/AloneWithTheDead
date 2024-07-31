@@ -7,6 +7,7 @@ public class ZombieAnimation : MonoBehaviour
     [Header("Script References")]
     [SerializeField] private Animator animator;
     [SerializeField] private ZombieStateMachine stateMachine;
+    
 
     public void IdleManager()
     {
@@ -33,6 +34,6 @@ public class ZombieAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        animator.SetBool("IsBoring", stateMachine.GetIsBoring());
     }
 }
