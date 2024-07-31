@@ -27,6 +27,10 @@ public class ZombieStateMachine : MonoBehaviour
     public void SetZombieState(ZombieState state) { this.zombieState = state; }
     public ZombieState GetZombieState() { return this.zombieState; }
 
+    public bool GetIsMoving() { return this.IsMoving; }
+    public bool GetIsFollowing() {  return this.IsFollowing; }
+    public bool GetIsPatrolling() { return this.IsPatrolling; }
+
     #endregion
 
     // Update is called once per frame

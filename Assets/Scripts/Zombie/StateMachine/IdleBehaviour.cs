@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrollingBehaviour : StateMachineBehaviour
+public class IdleBehaviour : StateMachineBehaviour
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         ZombieStateMachine zombie = animator.GetComponent<ZombieStateMachine>();
-        zombie.SetZombieState(ZombieState.Patrolling);
+        zombie.SetZombieState(ZombieState.Idle);
+
+        ZombieAnimation zombieAnimation = animator.GetComponentInChildren<ZombieAnimation>();
+        zombieAnimation.IdleManager();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
