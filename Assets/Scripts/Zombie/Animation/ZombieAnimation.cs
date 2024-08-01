@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class ZombieAnimation : MonoBehaviour
 {
-
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip audioZombieAttack,audioZombieGunHurt,audioZombieKnifeHurt,audioZombieDie;
 
     [Header("Script References")]
     [SerializeField] private Animator animator;
@@ -85,7 +87,8 @@ public class ZombieAnimation : MonoBehaviour
     private void OnZombieAttacks()
     {
         AttackManager();
-
+        audioSource.pitch = Random.Range(0.7f,1.2f);
+        audioSource.PlayOneShot(audioZombieAttack);
     }
 
     /// <summary>
@@ -93,7 +96,15 @@ public class ZombieAnimation : MonoBehaviour
     /// </summary>
     private void OnZombieGetHurts(FPSItem item)
     {
-
+        audioSource.pitch = Random.Range(0.7f,1.2f);
+        if (item.weaponType == FPSItem.WeaponType.Fire)
+        {
+            audioSource.PlayOneShot(audioZombieGunHurt);
+        }
+        if (item.weaponType == FPSItem.WeaponType.Melee)
+        {
+            audioSource.PlayOneShot(audioZombieKnifeHurt);
+        }
     }
 
     /// <summary>
