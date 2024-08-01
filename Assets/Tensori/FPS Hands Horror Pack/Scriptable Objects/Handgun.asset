@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Handgun
   m_EditorClassIdentifier: 
   WeaponDamage: 8
+  WeaponNoise: 10
   weaponType: 2
   WeaponReach: 1
   WeaponAttackDelay: 0.25

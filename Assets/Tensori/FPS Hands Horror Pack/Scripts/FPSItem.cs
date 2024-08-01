@@ -20,6 +20,9 @@ namespace Tensori.FPSHandsHorrorPack
         [Tooltip("Damage of the weapon")]
         [Min(1)]public float WeaponDamage;
 
+        [Tooltip("Weapon Noise when attack")]
+        [Min(1)] public float WeaponNoise;
+
         [Tooltip("Type of the weapon")]
         public WeaponType weaponType;
 

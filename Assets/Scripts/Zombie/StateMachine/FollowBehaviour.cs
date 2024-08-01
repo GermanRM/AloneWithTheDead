@@ -9,13 +9,16 @@ public class FollowBehaviour : StateMachineBehaviour
     {
         ZombieStateMachine zombie = animator.GetComponent<ZombieStateMachine>();
         zombie.SetZombieState(ZombieState.Following);
+
+        ZombieAnimation zombieAnimation = animator.GetComponentInChildren<ZombieAnimation>();
+        zombieAnimation.RunManager();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        ZombieAnimation zombieAnimation = animator.GetComponentInChildren<ZombieAnimation>();
-        zombieAnimation.IdleManager();
+        //ZombieAnimation zombieAnimation = animator.GetComponentInChildren<ZombieAnimation>();
+        //zombieAnimation.IdleManager();
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

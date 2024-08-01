@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e8c6027337e07448e0dd91076647c6, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
+  WeaponDamage: 0
+  WeaponNoise: 20
+  weaponType: 0
+  WeaponReach: 0
+  WeaponAttackDelay: 0
+  AmmunitionClipSize: 4
   ItemPrefab: {fileID: 9016199863953354979, guid: 7d1eacc19d031a84b8421112d860841c,
     type: 3}
   CanCancelReloadAnimationByShooting: 0
   CanCancelReloadAnimationByChangingItem: 0
   EnableAmmunitionUI: 1
-  AmmunitionClipSize: 4
   HandsPivotBoneTransformName: shotgun
   ItemAnimatorTimeParameter: AnimationTime
   AttackAnimations:
