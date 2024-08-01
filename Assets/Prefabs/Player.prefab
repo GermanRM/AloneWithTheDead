@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: 20
-  actualDamage: 0
+  actualDamage: 1
   canShoot: 1
   canSwitchWeapon: 1
   weaponSwitchDelay: 0.5
@@ -379,10 +379,6 @@ MonoBehaviour:
   defaultLayer:
     serializedVersion: 2
     m_Bits: 1
-  bulletPosition: {fileID: 7533097801536381665}
-  bulletSpreadVariance: {x: 0.06, y: 0.06, z: 0.06}
-  bulletTrail: {fileID: 1690961380175257349, guid: a11689f307475334bae0febbb2fcd405,
-    type: 3}
   isAiming: 0
   ammoInCartridge: 0
   totalAmmo: 0
@@ -428,7 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1db5a35037beba4184137cc1d57d552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupDistance: 4
+  pickupDistance: 6
   interacteableMask:
     serializedVersion: 2
     m_Bits: 513
@@ -1271,12 +1267,6 @@ PrefabInstance:
 --- !u!95 &4170444443852999347 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 8625456702037302360, guid: 3ed92da55700be14ba10f9ba16dd4925,
-    type: 3}
-  m_PrefabInstance: {fileID: 5644032928589420267}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7533097801536381665 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2799359362893886474, guid: 3ed92da55700be14ba10f9ba16dd4925,
     type: 3}
   m_PrefabInstance: {fileID: 5644032928589420267}
   m_PrefabAsset: {fileID: 0}
