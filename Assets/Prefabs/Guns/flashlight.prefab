@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3722224323112638678}
   - component: {fileID: 1024566543047561446}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: flashlight_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 100049667877908428}
   - component: {fileID: 5069828966774413703}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: flashlight_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 7674763055704997522}
   - component: {fileID: 8111478692470610244}
   - component: {fileID: 3900524783639768431}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3256026216192047021}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,7 +331,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6739749900776702860}
   - component: {fileID: 246722120057274473}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: flashlight_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,11 +418,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5881542531842811699}
   - component: {fileID: 1712898842545426498}
-  - component: {fileID: 8837431313254251158}
-  - component: {fileID: 5074940246852865000}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: flashlight
-  m_TagString: Interacteable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -435,7 +433,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6545066619514125705}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 53.213, y: 1.032, z: -9.192973}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -479,32 +477,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5506507790749812488}
   m_Enabled: 1
---- !u!65 &8837431313254251158
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6545066619514125705}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.06028366, y: 0.06376457, z: 0.22384262}
-  m_Center: {x: -0.0031833649, y: 0.0011034012, z: 0.10007572}
---- !u!114 &5074940246852865000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6545066619514125705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b162f4639f850c4448d7e51b9a95643f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fpsItem: {fileID: 0}
 --- !u!1 &6655959903335888901
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +486,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7459411439989091439}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -546,7 +518,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3428746534113463151}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,7 +550,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6264424571788176618}
   - component: {fileID: 5506507790749812488}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: flashlight_LOD3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
