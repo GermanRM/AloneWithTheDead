@@ -1833,6 +1833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: 0
   speed: 10
+  delay: 1.5
   margin: 25
   multiplier: 5
   player: {fileID: 249158004}
@@ -1841,3 +1842,5 @@ MonoBehaviour:
   left: {fileID: 865335314}
   right: {fileID: 1590028279}
   center: {fileID: 1870338061}
+  stats: {fileID: 0}
+  playerMovement: {fileID: 0}
