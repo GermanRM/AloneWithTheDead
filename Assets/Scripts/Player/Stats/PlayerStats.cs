@@ -78,9 +78,16 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        WeaponSwitcher();
-        Shoot();
-        Reload();
+        if (GameManager.Instance.gameState == GameState.Playing)
+        {
+            WeaponSwitcher();
+            Shoot();
+            Reload();
+
+            if (actualItem != null) 
+                actualDamage = actualItem.WeaponDamage;
+
+        }
     }
 
     #region Player Health

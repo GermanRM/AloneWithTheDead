@@ -108,10 +108,13 @@ public class ZombieMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        WatchTimeCounterManager();
-        ForgetPlayerLocation();
+        if (GameManager.Instance.gameState == GameState.Playing)
+        {
+            WatchTimeCounterManager();
+            ForgetPlayerLocation();
 
-        Movement();
+            Movement();
+        }
     }
 
     #region Zombie Movement
