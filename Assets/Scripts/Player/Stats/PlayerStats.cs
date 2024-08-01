@@ -119,7 +119,7 @@ public class PlayerStats : MonoBehaviour
                         Debug.Log(hit.collider.gameObject.name);
                         ZombieHitbox hitbox = hit.collider.gameObject.GetComponent<ZombieHitbox>();
 
-                        if (hitbox != null) { hitbox.ApplyDamageInRegion(actualDamage); }
+                        if (hitbox != null) { hitbox.ApplyDamageInRegion(actualDamage, actualItem); }
                     }
                 }
             }
@@ -140,7 +140,7 @@ public class PlayerStats : MonoBehaviour
 
                         ZombieHitbox hitbox = hit.collider.gameObject.GetComponent<ZombieHitbox>();
 
-                        if (hitbox != null) { hitbox.ApplyDamageInRegion(actualDamage); }
+                        if (hitbox != null) { hitbox.ApplyDamageInRegion(actualDamage, actualItem); }
                     }
                 }
             }

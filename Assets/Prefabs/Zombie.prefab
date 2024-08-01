@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ff4bf063f2d81a44ae2f3dde2323355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zombieHealth: 0
-  isAlive: 0
+  zombieHealth: 1
+  isAlive: 1
   damage: 5
   canAttack: 1
   attackDelay: 1

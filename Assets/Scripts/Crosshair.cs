@@ -39,6 +39,7 @@ public class Crosshair : MonoBehaviour
 
     void Update()
     {
+        EnableDisableOnAim();
         CrosshairMovement();
         OpenCrosshairInMovement();
     }
@@ -66,6 +67,26 @@ public class Crosshair : MonoBehaviour
         bottom.position = new Vector2(bottom.position.x, BottomValue);
         left.position = new Vector2(LeftValue, center.position.y);
         right.position = new Vector2(RightValue, center.position.y);
+    }
+
+    private void EnableDisableOnAim()
+    {
+        if (stats.isAiming)
+        {
+            top.gameObject.SetActive(false);
+            bottom.gameObject.SetActive(false);
+            left.gameObject.SetActive(false);
+            right.gameObject.SetActive(false);
+            center.gameObject.SetActive(false);
+        }
+        else
+        {
+            top.gameObject.SetActive(true);
+            bottom.gameObject.SetActive(true);
+            left.gameObject.SetActive(true);
+            right.gameObject.SetActive(true);
+            center.gameObject.SetActive(true);
+        }
     }
 
     private void OpenCrosshairInMovement()

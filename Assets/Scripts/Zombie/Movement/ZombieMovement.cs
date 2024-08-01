@@ -68,11 +68,13 @@ public class ZombieMovement : MonoBehaviour
     //Script References
     private FieldOfView FOV;
     private NavMeshAgent agent;
+    private ZombieCombat combat;
 
     private void Awake()
     {
         FOV = GetComponent<FieldOfView>();
         agent = GetComponent<NavMeshAgent>();
+        combat = GetComponent<ZombieCombat>();
     }
 
     /// <summary>
@@ -228,7 +230,7 @@ public class ZombieMovement : MonoBehaviour
 
     private void RotateToPlayer()
     {
-        if (targetTransform != null)
+        if (targetTransform != null && combat.isAlive)
         {
             //Rotate the zombie to the player
             // Calcular la dirección hacia el jugador
