@@ -9,9 +9,10 @@ public class ZombieSounds : MonoBehaviour
     private bool isPlaying=false;
     public AudioSource audioSource;
     public AudioClip audioGroan;
+    [SerializeField] private ZombieCombat combat;
 
-private void Update() {
-    if (!isPlaying)
+    private void Update() {
+    if (!isPlaying && combat.isAlive)
     {
         StartCoroutine(SoundDelay());
     }

@@ -87,8 +87,8 @@ public class ZombieAnimation : MonoBehaviour
     private void OnZombieAttacks()
     {
         AttackManager();
-        audioSource.pitch = Random.Range(0.7f,1.2f);
-        audioSource.PlayOneShot(audioZombieAttack);
+        //audioSource.pitch = Random.Range(0.7f,1.2f);
+        //audioSource.PlayOneShot(audioZombieAttack);
     }
 
     /// <summary>
@@ -96,15 +96,15 @@ public class ZombieAnimation : MonoBehaviour
     /// </summary>
     private void OnZombieGetHurts(FPSItem item)
     {
-        audioSource.pitch = Random.Range(0.7f,1.2f);
-        if (item.weaponType == FPSItem.WeaponType.Fire)
-        {
-            audioSource.PlayOneShot(audioZombieGunHurt);
-        }
-        if (item.weaponType == FPSItem.WeaponType.Melee)
-        {
-            audioSource.PlayOneShot(audioZombieKnifeHurt);
-        }
+        //audioSource.pitch = Random.Range(0.7f,1.2f);
+        //if (item.weaponType == FPSItem.WeaponType.Fire)
+        //{
+        //    audioSource.PlayOneShot(audioZombieGunHurt);
+        //}
+        //if (item.weaponType == FPSItem.WeaponType.Melee)
+        //{
+       //     audioSource.PlayOneShot(audioZombieKnifeHurt);
+        //}
     }
 
     /// <summary>
@@ -112,7 +112,8 @@ public class ZombieAnimation : MonoBehaviour
     /// </summary>
     private void OnZombieDie()
     {
-
+        animator.SetTrigger("DeathTrigger");
+        movement.GetAgent().isStopped = true;
     }
 
     #endregion

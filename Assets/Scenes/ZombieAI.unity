@@ -347,6 +347,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6601492414118616581, guid: 80586482cc5342847bca9543709f79fe,
         type: 3}
+      propertyPath: actualDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6601492414118616581, guid: 80586482cc5342847bca9543709f79fe,
+        type: 3}
       propertyPath: bulletSpreadVariance.x
       value: 1
       objectReference: {fileID: 0}
