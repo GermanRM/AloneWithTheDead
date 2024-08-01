@@ -66,17 +66,20 @@ public class ZombieAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!movement.IsMoving(0.2f)) IdleManager();
-        else
+        if (GameManager.Instance.gameState == GameState.Playing)
         {
-            if (movement.GetIsPlayerDetected())
-                RunManager();
+            if (!movement.IsMoving(0.2f)) IdleManager();
+            else
+            {
+                if (movement.GetIsPlayerDetected())
+                    RunManager();
 
-            if (!movement.GetIsPlayerDetected())
-                WalkManager();            
+                if (!movement.GetIsPlayerDetected())
+                    WalkManager();            
+            }
+
+            animator.SetBool("IsMoving", movement.IsMoving(0.2f));
         }
-
-        animator.SetBool("IsMoving", movement.IsMoving(0.2f));
     }
 
     #region Event Triggers

@@ -3176,8 +3176,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1833732759}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1852298530}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
         m_Arguments:
@@ -4256,11 +4256,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameState: 0
-  lobbyScene: MainMenu
+  lobbyScene: Main Menu
   gameScene: ZombieAI
   timeToComplete: 0
-  GameLoopCanvas: {fileID: 3821973708628036588, guid: 7ebbc66717124934381ec9f3d2b53bc3,
+  gameLoopCanvas: {fileID: 3821973708628036588, guid: 7ebbc66717124934381ec9f3d2b53bc3,
     type: 3}
+  gameLoopManager: {fileID: 0}
+  zombiesKilled: 0
+  zombiesKilledGoal: 1
   playerPrefab: {fileID: 8587992233087858525, guid: 80586482cc5342847bca9543709f79fe,
     type: 3}
   playerRef: {fileID: 0}

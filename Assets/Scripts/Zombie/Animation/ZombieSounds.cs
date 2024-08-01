@@ -12,10 +12,16 @@ public class ZombieSounds : MonoBehaviour
     [SerializeField] private ZombieCombat combat;
 
     private void Update() {
-    if (!isPlaying && combat.isAlive)
+
+        if (GameManager.Instance.gameState == GameState.Playing)
+        {
+
+            if (!isPlaying && combat.isAlive)
     {
         StartCoroutine(SoundDelay());
     }
+        }
+
     
 }
 

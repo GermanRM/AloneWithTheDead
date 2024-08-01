@@ -14,7 +14,10 @@ public class GameManager : MonoBehaviour
 
     [Header("GameLoop Properties")]
     [SerializeField] private float timeToComplete;
-    [SerializeField] private GameObject GameLoopCanvas;
+    [SerializeField] private GameObject gameLoopCanvas;
+    [SerializeField] private GameLoopManager gameLoopManager;
+    public float zombiesKilled;
+    public float zombiesKilledGoal;
 
     [Header("Player Properties")]
     [SerializeField] private GameObject playerPrefab;
@@ -51,7 +54,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        CheckDeath();
+        if (gameState == GameState.Paused) { Cursor.lockState = CursorLockMode.None; }
+
+        if (gameState == GameState.Playing)
+        {
+            CheckDeath();
+            CheckWin();
+        }
     }
 
     #region Player
@@ -86,21 +95,29 @@ public class GameManager : MonoBehaviour
 
             if (stats.isDeath)
             {
+                gameLoopManager.EnableDisableGameLoopHolder(false);
                 gameState = GameState.Paused;
                 playerSpawned = false;
-                //gameCanvasUI.EnableGameOverScreen();
+                gameLoopManager.SetGameOverText("Game Over");
+                gameLoopManager.EnableDisableGameOverHolder(true);
             }
         }
     }
 
-    public void CheckGameOver()
+    private void CheckWin()
     {
-        if (playerRef != null)
+        if (zombiesKilled >= zombiesKilledGoal)
         {
+            gameLoopManager.EnableDisableGameLoopHolder(false);
             gameState = GameState.Paused;
             playerSpawned = false;
-            //gameCanvasUI.EnableGameOverScreen();
+            gameLoopManager.SetGameOverText("You win!!"); gameLoopManager.EnableDisableGameOverHolder(true);
         }
+    }
+
+    public void AddZombieKilled(float zombieKilled)
+    {
+        this.zombiesKilled += zombieKilled;
     }
 
     #endregion
@@ -116,12 +133,20 @@ public class GameManager : MonoBehaviour
             
             if (!playerSpawned)
             {
-                GameObject gameLoopCanvas = Instantiate(GameLoopCanvas);
+                GameObject go = Instantiate(gameLoopCanvas);
+                gameLoopManager = go.GetComponent<GameLoopManager>();
+                gameLoopManager.EnableDisableGameLoopHolder(true);
                 playerSpawned = true;
                 SpawnPlayer(spawnPoint);
             }
         }
-        else if (scene.name == lobbyScene) gameState = GameState.Lobby;
+        else if (scene.name == lobbyScene)
+        {
+            gameState = GameState.Lobby;
+            playerSpawned = false;
+            gameLoopManager = null;
+            zombiesKilled = 0;
+        }
     }
 
     public void LoadScene(string scene)

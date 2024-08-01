@@ -132,11 +132,14 @@ public class PlayerMovement : MonoBehaviour
         if (isCrouching)
             CheckForAboveObject();
 
-        GetInputs();
-        UpdateColliderHeight();
-        UpdateTransform();
+        if (GameManager.Instance.gameState == GameState.Playing)
+        {
+            GetInputs();
+            UpdateColliderHeight();
+            UpdateTransform();
 
-        EventTriggers();
+            EventTriggers();
+        }
     }
 
     #region Inputs

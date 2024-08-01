@@ -12,6 +12,11 @@ public class Menu : MonoBehaviour
     [SerializeField] private bool fadeOut = false;
     [SerializeField] private float fadeSpeed = 1.0f; // Controla la velocidad del fade
 
+    public void LoadScene(string sceneName)
+    {
+        GameManager.Instance.LoadScene(sceneName);
+    }
+
     public void ShowUI()
     {
         fadeIn = true;

@@ -77,6 +77,7 @@ public class ZombieCombat : MonoBehaviour
         {
             isAlive = false;
             OnZombieDead?.Invoke();
+            GameManager.Instance.AddZombieKilled(1);
         }
 
     }
