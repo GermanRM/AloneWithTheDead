@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponDamage: 2
   weaponType: 0
-  WeaponReach: 3
-  WeaponAttackDelay: 1
+  WeaponReach: 1.2
+  WeaponAttackDelay: 0.45
   AmmunitionClipSize: 8
   ItemPrefab: {fileID: 0}
   CanCancelReloadAnimationByShooting: 0

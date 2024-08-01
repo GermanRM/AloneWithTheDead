@@ -12,11 +12,11 @@ public class ZombieMovement : MonoBehaviour
     [SerializeField] private float runSpeed;
 
     [Header("Target Properties")]
-
     [Tooltip("Movement Target")]
     [SerializeField] private Vector3 targetPos;
 
     [Header("Detection Properties")]
+    [SerializeField] private Transform targetTransform;
 
     [Tooltip("Determine if player is Visible to the zombie")]
     [SerializeField] private bool isPlayerVisible;
@@ -24,12 +24,31 @@ public class ZombieMovement : MonoBehaviour
     [Tooltip("Determine if player has been detected")]
     [SerializeField] private bool isPlayerDetected;
 
-    [Tooltip("Amount of time the enemy must see the player to determine that he has detected him")]
-    [SerializeField] private float watchTimeTolerance;
+    [Tooltip("Turn speed when player is detected")]
+    [SerializeField] private float turnSpeed;
+
+    [Tooltip("Amount of time until the enemy forget the player location")]
+    [SerializeField] private float forgetTimeTolerance;
+    private float forgetCounter;
+
+    [Tooltip("Amount of time the enemy must see the player to determine that he has detected him (When is far)")]
+    [SerializeField] private float visionWatchTimeTolerance;
+
+    [Tooltip("Amount of time the enemy must see the player to determine that he has detected him (When is in blindSpot)")]
+    [SerializeField] private float closeWatchTimeTolerance;
+
+    private float watchTimeTolerance;
     private float watchTimeCounter = 0; //Counter of watchTime
 
     [Header("Patroll Properties")]
     [SerializeField] private Transform centrePoint;
+
+    [Header("Blind Spot Detection Properties")]
+    [SerializeField] private Transform blindSpot;
+    [SerializeField] private Vector3 blindSpotSize;
+    [SerializeField] private float blindSpotDistance;
+    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask defaultLayer;
 
     /// <summary>
     /// Delay to go to the next point
@@ -66,11 +85,17 @@ public class ZombieMovement : MonoBehaviour
 
     #region Getter / Setter
 
+    public NavMeshAgent GetAgent() { return agent; }
+
     public Vector3 GetTargetPos() { return targetPos; }
+
+    public Transform GetTargetTransform() { return targetTransform; }
 
     public bool IsMoving(float minSpeed) { return agent.velocity.magnitude > minSpeed; }
 
     public bool GetIsFollowing() { return isFollowing; }
+
+    public bool GetIsPlayerVisible() { return isPlayerVisible; }
 
     #endregion
 
@@ -78,6 +103,7 @@ public class ZombieMovement : MonoBehaviour
     void Update()
     {
         WatchTimeCounterManager();
+        ForgetPlayerLocation();
 
         Movement();
     }
@@ -91,10 +117,18 @@ public class ZombieMovement : MonoBehaviour
     {
         if (isPlayerDetected)
         {
-            targetPos = GetDetectedPlayerPos();
             agent.speed = runSpeed;
             isFollowing = true;
+            targetPos = GetDetectedPlayerPos();
             agent.SetDestination(targetPos);
+
+            if (CanAttack(true))
+            {
+                RotateToPlayer();
+
+                //Attack
+            }
+
         }
         else
         {
@@ -126,7 +160,29 @@ public class ZombieMovement : MonoBehaviour
     /// </summary>
     private void WatchTimeCounterManager()
     {
-        isPlayerVisible = FOV.GetVisibleTargets().Count > 0;
+        if (targetTransform == null)
+        {
+            if (FOV.GetVisibleTargets().Count > 0)
+            {
+                targetTransform = FOV.GetVisibleTargets()[0];
+            }
+
+            if (Physics.BoxCast(blindSpot.position, blindSpotSize, transform.forward, out RaycastHit hit, transform.rotation, blindSpotDistance, defaultLayer | enemyLayer))
+            {
+                if (hit.collider.CompareTag("Player")) targetTransform = hit.transform.gameObject.transform;
+            }
+        }
+
+        if (DetectBlindSpot())
+        {
+            watchTimeTolerance = closeWatchTimeTolerance;
+        }
+        else
+        {
+            watchTimeTolerance = visionWatchTimeTolerance;
+        }
+
+        isPlayerVisible = FOV.GetVisibleTargets().Count > 0 || DetectBlindSpot();
 
         if (isPlayerVisible) //if the player is visible
         {
@@ -137,18 +193,67 @@ public class ZombieMovement : MonoBehaviour
             watchTimeCounter = Mathf.Clamp(watchTimeCounter += Time.deltaTime, 0, watchTimeTolerance);
         }
 
-        isPlayerDetected = watchTimeCounter <= 0; //if the watchTimeCounter reach zero or less, then player is detected, otherwise is not detected
+        if (watchTimeCounter <= 0 && !isPlayerDetected)
+        {
+            isPlayerDetected = true; //if the watchTimeCounter reach zero or less, then player is detected, otherwise is not detected
+        }      
+    }
+
+    private void ForgetPlayerLocation()
+    {
+        if (isPlayerDetected)
+        {
+            if (!isPlayerVisible) forgetCounter = Mathf.Clamp(forgetCounter -= Time.deltaTime, 0, forgetTimeTolerance);
+            else forgetCounter = forgetTimeTolerance;
+
+        }
+        else
+        {
+            forgetCounter = Mathf.Clamp(forgetCounter += Time.deltaTime, 0, forgetTimeTolerance);
+        }
+
+        if (forgetCounter <= 0 && isPlayerDetected && !isPlayerVisible)
+        {
+            isPlayerDetected = false;
+        }
     }
 
     #endregion
 
     #region Checkers / Utilities
 
+    private void RotateToPlayer()
+    {
+        if (targetTransform != null)
+        {
+            //Rotate the zombie to the player
+            // Calcular la dirección hacia el jugador
+            Vector3 direction = (targetTransform.position - transform.position).normalized;
+
+            // Rotar el agente para que mire al jugador
+            if (direction != Vector3.zero) // Evitar errores de división por cero
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * turnSpeed);
+            }
+        }
+    }
+
+    public bool CanAttack(bool canAttack)
+    {
+        return isPlayerVisible && DetectBlindSpot() && !agent.pathPending && canAttack;
+    }
+
+    public bool DetectBlindSpot()
+    {
+        return Physics.BoxCast(blindSpot.position, blindSpotSize, transform.forward, transform.rotation, blindSpotDistance, defaultLayer | enemyLayer);
+    }
+
     /// <summary>
     /// Get the player pos
     /// </summary>
     /// <returns></returns>
-    public Vector3 GetDetectedPlayerPos() {  return FOV.GetVisibleTargets()[0].position; }
+    public Vector3 GetDetectedPlayerPos() {  return targetTransform.position; }
 
     /// <summary>
     /// Give us a random point in the nav mesh area to do random patrolling
@@ -184,6 +289,15 @@ public class ZombieMovement : MonoBehaviour
         yield return new WaitForSeconds(seconds);
 
         goToNextPoint = true;
+    }
+
+    #endregion
+
+    #region Debug
+
+    private void OnDrawGizmos()
+    {
+        ExtDebug.DrawBoxCastBox(blindSpot.position, blindSpotSize, transform.rotation, transform.forward, blindSpotDistance, DetectBlindSpot() ? Color.green : Color.red);
     }
 
     #endregion
