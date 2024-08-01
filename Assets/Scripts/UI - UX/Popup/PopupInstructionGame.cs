@@ -3,25 +3,24 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PopupInstructionGame : MonoBehaviour
+
 {
-    public GameObject popup; // Asigna el objeto Popup aquí
-    public Button acceptButton; // Asigna el botón Aceptar aquí
+    public GameObject popup; // Assign the Popup GameObject here
+    public Button acceptButton; // Assign the Accept Button here
     private CanvasGroup canvasGroup;
-    private Animator animator; // Añadir Animator
 
     void Start()
     {
         if (popup != null)
         {
             canvasGroup = popup.GetComponent<CanvasGroup>();
-            animator = popup.GetComponent<Animator>(); // Obtener el Animator
             popup.SetActive(false);
             StartCoroutine(ShowPopupAfterDelay());
             acceptButton.onClick.AddListener(HidePopup);
         }
         else
         {
-            Debug.LogError("Popup GameObject no asignado en el inspector.");
+            Debug.LogError("Popup GameObject not assigned in the inspector.");
         }
     }
 
@@ -36,21 +35,21 @@ public class PopupInstructionGame : MonoBehaviour
     {
         float duration = 0.5f;
         float currentTime = 0f;
-        
+
         while (currentTime <= duration)
         {
             currentTime += Time.deltaTime;
             canvasGroup.alpha = Mathf.Lerp(0, 1, currentTime / duration);
             yield return null;
         }
-        Time.timeScale = 0f; // Pausar el juego
+        canvasGroup.alpha = 1; // Ensure alpha is set to 1
         StartCoroutine(HidePopupAfterDelay());
     }
 
     IEnumerator HidePopupAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(10f); // Esperar 10 segundos en tiempo real
-        animator.SetBool("IsFadingOut", true); // Activar el parámetro de fade out
+        yield return new WaitForSeconds(10f); // Wait 10 seconds in real time
+        StartCoroutine(FadeOut());
     }
 
     IEnumerator FadeOut()
@@ -60,20 +59,18 @@ public class PopupInstructionGame : MonoBehaviour
 
         while (currentTime <= duration)
         {
-            currentTime += Time.unscaledDeltaTime;
+            currentTime += Time.deltaTime;
             canvasGroup.alpha = Mathf.Lerp(1, 0, currentTime / duration);
             yield return null;
         }
+        canvasGroup.alpha = 0; // Ensure alpha is set to 0
         popup.SetActive(false);
-        Time.timeScale = 1f; // Reanudar el juego
-        animator.SetBool("IsFadingOut", false); // Reiniciar el parámetro de fade out
     }
 
     void HidePopup()
     {
-        StopAllCoroutines(); // Detener corutinas en curso
+        StopAllCoroutines(); // Stop all running coroutines
         StartCoroutine(FadeOut());
-        Time.timeScale = 1f; // Reanudar el juego
         acceptButton.onClick.RemoveListener(HidePopup);
     }
 }
