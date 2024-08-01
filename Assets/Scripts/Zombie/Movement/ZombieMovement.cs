@@ -108,10 +108,13 @@ public class ZombieMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        WatchTimeCounterManager();
-        ForgetPlayerLocation();
+        if (GameManager.Instance.gameState == GameState.Playing)
+        {
+            WatchTimeCounterManager();
+            ForgetPlayerLocation();
 
-        Movement();
+            Movement();
+        }
     }
 
     #region Zombie Movement
@@ -252,14 +255,20 @@ public class ZombieMovement : MonoBehaviour
 
     public bool DetectBlindSpot()
     {
-        return Physics.BoxCast(blindSpot.position, blindSpotSize, transform.forward, transform.rotation, blindSpotDistance, defaultLayer | enemyLayer);
+        return Physics.BoxCast(blindSpot.position, blindSpotSize, transform.forward, transform.rotation, blindSpotDistance, enemyLayer);
     }
 
     /// <summary>
     /// Get the player pos
     /// </summary>
     /// <returns></returns>
-    public Vector3 GetDetectedPlayerPos() {  return targetTransform.position; }
+    public Vector3 GetDetectedPlayerPos()
+    {
+        if (targetTransform != null) 
+            return targetTransform.position;
+
+        return Vector3.zero;
+    }
 
     /// <summary>
     /// Give us a random point in the nav mesh area to do random patrolling

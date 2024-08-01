@@ -71,7 +71,7 @@ public class PlayerInteractions : MonoBehaviour
                     currentMaterial = hitObject.GetComponentInChildren<Renderer>().materials[1];
 
                     // Cambiar la escala
-                    currentMaterial.SetFloat("_Scale", 1.06f);
+                    currentMaterial.SetFloat("_Scale", 1.6f);
 
                     #endregion
                 }

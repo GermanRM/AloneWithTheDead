@@ -8,6 +8,7 @@ public class Crosshair : MonoBehaviour
     [Header("Crosshair Properties")]
     [Range(0, 100)][SerializeField] private float value;
     [SerializeField] private float speed;
+    [SerializeField] private GameObject playerRef;
 
     [Header("Crosshair Profiles")]
     [Range(0, 100)][SerializeField] private float idleValue;
@@ -39,6 +40,23 @@ public class Crosshair : MonoBehaviour
 
     void Update()
     {
+
+        if (playerRef == null)
+        {
+            playerRef = GameObject.FindGameObjectWithTag("Player");
+            stats = playerRef.GetComponent<PlayerStats>();
+            playerMovement = playerRef.GetComponent<PlayerMovement>();
+        }
+
+        if (GameManager.Instance.gameState == GameState.Paused)
+        {
+            transform.parent.gameObject.SetActive(false);
+        }
+        else
+        {
+            transform.parent.gameObject.SetActive(true);
+        }
+
         EnableDisableOnAim();
         CrosshairMovement();
         OpenCrosshairInMovement();
