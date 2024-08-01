@@ -8,6 +8,7 @@ public class PlayerStats : MonoBehaviour
 {
     [Header("Player Health Properties")]
     [SerializeField] private float playerHealth;
+    public bool isDeath;
 
     [Header("Player Combat Properties")]
     [SerializeField] private float actualDamage;
@@ -42,6 +43,7 @@ public class PlayerStats : MonoBehaviour
 
     public event Action<float> OnPlayerDamaged;
     public event Action<float> OnPlayerHealed;
+    public event Action OnPlayerDeath;
 
     public event Action<FPSItem> OnPlayerAttack;
     public event Action<FPSItem> OnPlayerAttackAnimStart;
@@ -87,6 +89,13 @@ public class PlayerStats : MonoBehaviour
     {
         playerHealth -= damage;
         OnPlayerDamaged?.Invoke(damage);
+
+        if (playerHealth <= 0)
+        {
+            isDeath = true;
+            OnPlayerDeath?.Invoke();
+        }
+
     }
 
     public void HealPlayer(float heal)

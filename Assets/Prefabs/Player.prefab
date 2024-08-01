@@ -387,7 +387,6 @@ MonoBehaviour:
   playerAttackMeleeSounds:
   - {fileID: 8300000, guid: 84872e40d11fe9b4a972885dc19f90f9, type: 3}
   playerAttackFireSounds:
-  - {fileID: 8300000, guid: 850081d29e7ee2041affdf0be69361f8, type: 3}
   - {fileID: 8300000, guid: 2c27efeb1d4f52d4590f172edd45afa5, type: 3}
   playerSwitchMeleeSound: {fileID: 8300000, guid: fc44a979d2b0eae4cb53254306fc9efb,
     type: 3}
@@ -548,7 +547,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: 20
-  actualDamage: 0
+  isDeath: 0
+  actualDamage: 1
   canShoot: 1
   canSwitchWeapon: 1
   weaponSwitchDelay: 0.5
@@ -603,7 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1db5a35037beba4184137cc1d57d552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupDistance: 4
+  pickupDistance: 6
   interacteableMask:
     serializedVersion: 2
     m_Bits: 513
@@ -645,7 +645,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2996252294963751061
 RectTransform:
   m_ObjectHideFlags: 0
