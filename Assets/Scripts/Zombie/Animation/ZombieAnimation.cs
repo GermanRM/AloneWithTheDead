@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ZombieAnimation : MonoBehaviour
 {
+
+
     [Header("Script References")]
     [SerializeField] private Animator animator;
     [SerializeField] private ZombieStateMachine stateMachine;
@@ -82,6 +84,7 @@ public class ZombieAnimation : MonoBehaviour
     private void OnZombieAttacks()
     {
         AttackManager();
+
     }
 
     /// <summary>
