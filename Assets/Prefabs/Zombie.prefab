@@ -1501,6 +1501,7 @@ MonoBehaviour:
   animator: {fileID: 2275573986622242536}
   stateMachine: {fileID: 6062413114012437124}
   combat: {fileID: 6576471895387746671}
+  movement: {fileID: 3200052984308719428}
 --- !u!4 &1738054133069486365 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1054734925844487272, guid: 8e4d3fc9a8d16ef4b82c5b8e18da1149,
@@ -1687,6 +1688,7 @@ MonoBehaviour:
   animator: {fileID: 6693459288941755044}
   stateMachine: {fileID: 6062413114012437124}
   combat: {fileID: 6576471895387746671}
+  movement: {fileID: 3200052984308719428}
 --- !u!4 &6586875919432162633 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7178008346128460830, guid: a35b5c15df1c8cd4e81331a9ed46e969,
@@ -1862,6 +1864,7 @@ MonoBehaviour:
   animator: {fileID: 2542065753409483155}
   stateMachine: {fileID: 6062413114012437124}
   combat: {fileID: 6576471895387746671}
+  movement: {fileID: 3200052984308719428}
 --- !u!4 &3740403596899684753 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7936608939897272070, guid: c90ed44b7861ba74eb9912be3ce50934,

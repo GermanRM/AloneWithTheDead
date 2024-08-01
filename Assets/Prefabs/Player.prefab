@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3937559970034336567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1115498742108801295}
+  m_Layer: 0
+  m_Name: NoiseCenter (Sneak Script)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1115498742108801295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3937559970034336567}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.368, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8587992233087858523}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6495743589488369138
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,6 +265,8 @@ GameObject:
   - component: {fileID: 8587992233087858523}
   - component: {fileID: 8587992233087858524}
   - component: {fileID: 6601492414118616581}
+  - component: {fileID: 3079118120437073433}
+  - component: {fileID: 845713068671398022}
   - component: {fileID: 8587992233087858522}
   m_Layer: 6
   m_Name: Player
@@ -258,6 +291,7 @@ Transform:
   - {fileID: 1968931410730079019}
   - {fileID: 8854818660350448714}
   - {fileID: 7998474253385191625}
+  - {fileID: 1115498742108801295}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -338,8 +372,6 @@ MonoBehaviour:
   canShoot: 1
   canSwitchWeapon: 1
   weaponSwitchDelay: 0.5
-  meleePos: {fileID: 0}
-  meleeBoxSize: {x: 0.6, y: 0.1, z: 0.1}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -356,6 +388,43 @@ MonoBehaviour:
   flashlightItem: {fileID: 11400000, guid: 3925385367fcb5644b08e1466bac92d2, type: 2}
   handsController: {fileID: 5850848480857029925}
   playerMovement: {fileID: 8587992233087858524}
+--- !u!114 &3079118120437073433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8587992233087858525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f63e4945eeec054e8d1636bcda67cbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actualRadius: 0
+  idleRadius: 0
+  walkRadius: 4
+  runRadius: 8
+  crouchRadius: 1
+  lerpSpeed: 6
+  noiseCenter: {fileID: 1115498742108801295}
+  zombieLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  playerMovement: {fileID: 8587992233087858524}
+--- !u!114 &845713068671398022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8587992233087858525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1db5a35037beba4184137cc1d57d552, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 6601492414118616581}
+  sneak: {fileID: 3079118120437073433}
 --- !u!143 &8587992233087858522
 CharacterController:
   m_ObjectHideFlags: 0

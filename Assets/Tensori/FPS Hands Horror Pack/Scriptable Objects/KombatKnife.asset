@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: KombatKnife
   m_EditorClassIdentifier: 
   WeaponDamage: 4
+  WeaponNoise: 2
   weaponType: 0
   WeaponReach: 1.5
   WeaponAttackDelay: 0.3
