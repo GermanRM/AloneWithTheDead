@@ -33,6 +33,11 @@ public class PlayerAudioManager : MonoBehaviour
     [SerializeField] private PlayerStats playerStats;
     [SerializeField] private PlayerMovement playerMovement;
 
+    private void Update()
+    {
+        this.enabled = !playerStats.isDeath;
+    }
+
     private void OnEnable()
     {
         playerMovement.OnPlayerMove += OnPlayerMovement;
