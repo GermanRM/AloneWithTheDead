@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Tensori.FPSHandsHorrorPack;
 using UnityEngine;
 
 public class ZombieCombat : MonoBehaviour
@@ -21,7 +22,7 @@ public class ZombieCombat : MonoBehaviour
     #region Events
 
     public event Action OnZombieAttack;
-    public event Action OnZombieDamageTaken;
+    public event Action<FPSItem> OnZombieDamageTaken;
 
     public event Action OnZombieDead;
 
@@ -31,11 +32,6 @@ public class ZombieCombat : MonoBehaviour
     void Update()
     {
         AttackPlayer();
-
-        if (zombieHealth <= 0)
-        {
-            isAlive = false;
-        }
     }
 
     #region Attack
@@ -72,15 +68,17 @@ public class ZombieCombat : MonoBehaviour
 
     #region Health
 
-    public void DamageZombie(float damage)
+    public void DamageZombie(float damage, FPSItem item)
     {
         zombieHealth -= damage;
-        OnZombieDamageTaken?.Invoke();
+        OnZombieDamageTaken?.Invoke(item);
 
         if (zombieHealth <= 0)
         {
+            isAlive = false;
             OnZombieDead?.Invoke();
         }
+
     }
 
     #endregion

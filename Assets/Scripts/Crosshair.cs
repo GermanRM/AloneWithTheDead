@@ -5,23 +5,57 @@ using UnityEngine;
 
 public class Crosshair : MonoBehaviour
 {
-    [Range(0, 100)]
-    public float value;
-    public float speed;
+    [Header("Crosshair Properties")]
+    [Range(0, 100)][SerializeField] private float value;
+    [SerializeField] private float speed;
 
+    [Header("Crosshair Profiles")]
+    [Range(0, 100)][SerializeField] private float idleValue;
+    [SerializeField] private float crouchValue = 20f;
+    [SerializeField] private float walkValue = 40f;
+    [SerializeField] private float runValue = 60f;
+    [SerializeField] private float meeleeMultiplier;
+    [SerializeField] private float gunMultiplier;
+    private bool modifyValue;
+
+    [Header("Design Properties")]
     public float delay;
     public float margin;
-    public float multiplier;
-    public GameObject player;
-    public RectTransform top, bottom, left, right, center;
+    [SerializeField] private List<UnityEngine.UI.RawImage> crosshairImages;
+    [SerializeField] private Color crosshairColor;
+    [SerializeField] private RectTransform top, bottom, left, right, center;
 
     [Header("Script References")]
     [SerializeField] private PlayerStats stats;
     [SerializeField] private PlayerMovement playerMovement;
+
+    private void Awake()
+    {
+        foreach (var item in crosshairImages)
+        {
+            item.color = crosshairColor;
+        }
+    }
+
     void Update()
     {
-        value = player.GetComponent<PlayerMovement>().GetMoveVelocityMagnitude() * multiplier;
+        EnableDisableOnAim();
+        CrosshairMovement();
+        OpenCrosshairInMovement();
+    }
 
+    private void OnEnable()
+    {
+        stats.OnPlayerAttackAnimStart += OnPlayerAttacks;
+    }
+
+    private void OnDisable()
+    {
+        stats.OnPlayerAttackAnimStart -= OnPlayerAttacks;
+    }
+
+    private void CrosshairMovement()
+    {
         float TopValue, BottomValue, LeftValue, RightValue;
 
         TopValue = Mathf.Lerp(top.position.y, center.position.y + margin + value, speed * Time.deltaTime);
@@ -35,36 +69,70 @@ public class Crosshair : MonoBehaviour
         right.position = new Vector2(RightValue, center.position.y);
     }
 
-    private void OnEnable()
+    private void EnableDisableOnAim()
     {
-        stats.OnPlayerAttackAnimStart += OnPlayerAttacks;
-        playerMovement.OnPlayerLand += OnPlayerLands;
+        if (stats.isAiming)
+        {
+            top.gameObject.SetActive(false);
+            bottom.gameObject.SetActive(false);
+            left.gameObject.SetActive(false);
+            right.gameObject.SetActive(false);
+            center.gameObject.SetActive(false);
+        }
+        else
+        {
+            top.gameObject.SetActive(true);
+            bottom.gameObject.SetActive(true);
+            left.gameObject.SetActive(true);
+            right.gameObject.SetActive(true);
+            center.gameObject.SetActive(true);
+        }
     }
 
-    private void OnDisable()
+    private void OpenCrosshairInMovement()
     {
-        stats.OnPlayerAttackAnimStart -= OnPlayerAttacks;
-        playerMovement.OnPlayerLand += OnPlayerLands;
+        if (!modifyValue)
+        {
+            if (!playerMovement.IsMoving(0.2f))
+            {
+                if (!playerMovement.IsCrouching())
+                    value = idleValue;
+                else
+                    value = crouchValue;
+            }
+            else
+            {
+                if (playerMovement.IsCrouching()) { }
+                    value = crouchValue;
+
+                if (!playerMovement.GetIsRunning())
+                    value = walkValue;
+
+                else
+                {
+                    value = runValue;
+                }
+            }
+
+            value = Mathf.Clamp(value, 0f, 100f);
+        }
     }
 
     private void OnPlayerAttacks(FPSItem item)
     {
-        StartCoroutine(MultiplierDelay(delay));
-    }
-    private void OnPlayerLands()
-    {
-        StartCoroutine(DividerDelay(delay));
-    }
-    private IEnumerator MultiplierDelay(float seconds)
-    {
-        multiplier *= 2.5f;
-        yield return new WaitForSeconds(seconds);
-        multiplier /= 2.5f;
-    }
-    private IEnumerator DividerDelay(float seconds)
-    {
-        multiplier *= -1.8f;
-        yield return new WaitForSeconds(seconds);
-        multiplier /= -1.8f;
+        if (item.weaponType == FPSItem.WeaponType.Melee)
+        {
+            modifyValue = true;
+            value *= meeleeMultiplier;
+            modifyValue = false;
+        }
+
+        if (item.weaponType == FPSItem.WeaponType.Fire)
+        {
+            modifyValue = true;
+            value *= gunMultiplier;
+            modifyValue = false;
+        }
+
     }
 }

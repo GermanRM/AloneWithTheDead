@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Tensori.FPSHandsHorrorPack;
 using UnityEngine;
 
 public class ZombieAnimation : MonoBehaviour
@@ -90,7 +91,7 @@ public class ZombieAnimation : MonoBehaviour
     /// <summary>
     /// Triggers when zombie get hurts
     /// </summary>
-    private void OnZombieGetHurts()
+    private void OnZombieGetHurts(FPSItem item)
     {
 
     }
