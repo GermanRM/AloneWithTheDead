@@ -8,6 +8,7 @@ public class ZombieAnimation : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private ZombieStateMachine stateMachine;
     [SerializeField] private ZombieCombat combat;
+    [SerializeField] private ZombieMovement movement;
 
     private void OnEnable()
     {
@@ -33,10 +34,16 @@ public class ZombieAnimation : MonoBehaviour
         animator.SetTrigger("WalkTrigger");
     }
 
+    public void RunManager()
+    {
+        animator.SetTrigger("RunTrigger");
+    }
+
     private void Initialize()
     {
         animator.SetInteger("IdleIndex", Random.Range(0, 3));
-        animator.SetInteger("WalkIndex", Random.Range(0, 2));
+        animator.SetInteger("WalkIndex", Random.Range(0, 1));
+        animator.SetInteger("RunIndex", Random.Range(0, 1));
     }
 
     // Start is called before the first frame update
@@ -48,7 +55,17 @@ public class ZombieAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        animator.SetBool("IsBoring", stateMachine.GetIsBoring());
+        if (!movement.IsMoving(0.2f)) IdleManager();
+        else
+        {
+            if (movement.GetIsPlayerDetected())
+                RunManager();
+
+            if (!movement.GetIsPlayerDetected())
+                WalkManager();            
+        }
+
+        animator.SetBool("IsMoving", movement.IsMoving(0.2f));
     }
 
     #region Event Triggers

@@ -92,6 +92,7 @@ public class ZombieMovement : MonoBehaviour
     public Transform GetTargetTransform() { return targetTransform; }
     public void SetTargetTransform(Transform transform) {  targetTransform = transform; }
 
+    public bool GetIsPlayerDetected() { return isPlayerDetected; }
     public void SetIsPlayerDetected(bool detected) { this.isPlayerDetected = detected; }
 
     public bool IsMoving(float minSpeed) { return agent.velocity.magnitude > minSpeed; }
