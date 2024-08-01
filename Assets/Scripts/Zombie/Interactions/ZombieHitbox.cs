@@ -12,6 +12,7 @@ public class ZombieHitbox : MonoBehaviour
 
     public void ApplyDamageInRegion(float damage, FPSItem item)
     {
-        zombieCombat.DamageZombie(damage * damageMultiplier, item);
+        if (zombieCombat.isAlive)
+            zombieCombat.DamageZombie(damage * damageMultiplier, item);
     }
 }

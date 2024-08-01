@@ -1438,6 +1438,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2061985175642935449, guid: 8e4d3fc9a8d16ef4b82c5b8e18da1149,
+        type: 3}
+      propertyPath: combat
+      value: 
+      objectReference: {fileID: 6576471895387746671}
     - target: {fileID: 6208858091492485657, guid: 8e4d3fc9a8d16ef4b82c5b8e18da1149,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -1498,6 +1503,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbbf3bfcfa88b3148b7c850d0071ca4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  audioZombieAttack: {fileID: 0}
+  audioZombieGunHurt: {fileID: 0}
+  audioZombieKnifeHurt: {fileID: 0}
+  audioZombieDie: {fileID: 0}
   animator: {fileID: 2275573986622242536}
   stateMachine: {fileID: 6062413114012437124}
   combat: {fileID: 6576471895387746671}
@@ -1551,6 +1561,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2161590625201193433}
     m_Modifications:
+    - target: {fileID: 933224951345848945, guid: a35b5c15df1c8cd4e81331a9ed46e969,
+        type: 3}
+      propertyPath: combat
+      value: 
+      objectReference: {fileID: 6576471895387746671}
     - target: {fileID: 7178008346128460830, guid: a35b5c15df1c8cd4e81331a9ed46e969,
         type: 3}
       propertyPath: m_RootOrder
@@ -1685,6 +1700,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbbf3bfcfa88b3148b7c850d0071ca4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  audioZombieAttack: {fileID: 0}
+  audioZombieGunHurt: {fileID: 0}
+  audioZombieKnifeHurt: {fileID: 0}
+  audioZombieDie: {fileID: 0}
   animator: {fileID: 6693459288941755044}
   stateMachine: {fileID: 6062413114012437124}
   combat: {fileID: 6576471895387746671}
@@ -1714,6 +1734,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2161590625201193433}
     m_Modifications:
+    - target: {fileID: 5313398121308011242, guid: c90ed44b7861ba74eb9912be3ce50934,
+        type: 3}
+      propertyPath: combat
+      value: 
+      objectReference: {fileID: 6576471895387746671}
     - target: {fileID: 8235597193464900179, guid: c90ed44b7861ba74eb9912be3ce50934,
         type: 3}
       propertyPath: m_Name
@@ -1861,6 +1886,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbbf3bfcfa88b3148b7c850d0071ca4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  audioZombieAttack: {fileID: 0}
+  audioZombieGunHurt: {fileID: 0}
+  audioZombieKnifeHurt: {fileID: 0}
+  audioZombieDie: {fileID: 0}
   animator: {fileID: 2542065753409483155}
   stateMachine: {fileID: 6062413114012437124}
   combat: {fileID: 6576471895387746671}
