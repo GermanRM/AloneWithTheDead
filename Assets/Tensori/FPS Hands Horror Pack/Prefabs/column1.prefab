@@ -191,6 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5711340008285738238}
   - component: {fileID: 655518744048018319}
+  - component: {fileID: 490477581}
   m_Layer: 0
   m_Name: column1
   m_TagString: Untagged
@@ -243,6 +244,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 823623563905802299}
   m_Enabled: 1
+--- !u!65 &490477581
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4902469283879669316}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.5328846, y: 4.4880214, z: 2.5375633}
+  m_Center: {x: -0.0018224716, y: 1.7440119, z: 0.0046634674}
 --- !u!1 &7768087132535527760
 GameObject:
   m_ObjectHideFlags: 0
