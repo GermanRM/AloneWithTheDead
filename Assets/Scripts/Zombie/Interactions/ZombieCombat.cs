@@ -38,7 +38,7 @@ public class ZombieCombat : MonoBehaviour
 
     private void AttackPlayer()
     {
-        if (zombieMovement.CanAttack(canAttack))
+        if (zombieMovement.CanAttack(canAttack) && isAlive)
         {
             StartCoroutine(attackDelayCoroutine());
 

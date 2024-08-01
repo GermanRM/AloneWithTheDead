@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d559f1f7e71bda41b962e243c671121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heldItem: {fileID: 0}
+  heldItem: {fileID: 11400000, guid: 07554f84e504f6c41a304bd42cfce75d, type: 2}
   CanShoot: 1
   CanReload: 1
   IsAiming: 0
