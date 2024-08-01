@@ -8,6 +8,7 @@ public class PlayerStats : MonoBehaviour
 {
     [Header("Player Health Properties")]
     [SerializeField] private float playerHealth;
+    public bool isDeath;
 
     [Header("Player Combat Properties")]
     [SerializeField] private float actualDamage;
@@ -42,6 +43,7 @@ public class PlayerStats : MonoBehaviour
 
     public event Action<float> OnPlayerDamaged;
     public event Action<float> OnPlayerHealed;
+    public event Action OnPlayerDeath;
 
     public event Action<FPSItem> OnPlayerAttack;
     public event Action<FPSItem> OnPlayerAttackAnimStart;
@@ -50,6 +52,9 @@ public class PlayerStats : MonoBehaviour
 
     public event Action<FPSItem> OnPlayerStartReload;
     public event Action<FPSItem> OnPlayerFinishReload;
+
+    public event Action OnPlayerStartAiming;
+    public event Action OnPlayerEndAiming;
 
     #endregion
 
@@ -84,6 +89,13 @@ public class PlayerStats : MonoBehaviour
     {
         playerHealth -= damage;
         OnPlayerDamaged?.Invoke(damage);
+
+        if (playerHealth <= 0)
+        {
+            isDeath = true;
+            OnPlayerDeath?.Invoke();
+        }
+
     }
 
     public void HealPlayer(float heal)
@@ -98,8 +110,16 @@ public class PlayerStats : MonoBehaviour
 
     private void Shoot()
     {
-        if (playerControls.Interactions.Aim.WasPerformedThisFrame() && !playerMovement.IsRunningAndMoving()) isAiming = true;
-        if (playerControls.Interactions.Aim.WasReleasedThisFrame() && isAiming) isAiming = false;
+        if (playerControls.Interactions.Aim.WasPerformedThisFrame() && !playerMovement.IsRunningAndMoving())
+        {
+            isAiming = true;
+            OnPlayerStartAiming?.Invoke();
+        }
+        if (playerControls.Interactions.Aim.WasReleasedThisFrame() && isAiming)
+        {
+            isAiming = false;
+            OnPlayerEndAiming?.Invoke();    
+        }
 
         if (playerControls.Interactions.Attack.WasPerformedThisFrame())
         {
