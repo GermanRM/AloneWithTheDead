@@ -262,7 +262,13 @@ public class ZombieMovement : MonoBehaviour
     /// Get the player pos
     /// </summary>
     /// <returns></returns>
-    public Vector3 GetDetectedPlayerPos() {  return targetTransform.position; }
+    public Vector3 GetDetectedPlayerPos()
+    {
+        if (targetTransform != null) 
+            return targetTransform.position;
+
+        return Vector3.zero;
+    }
 
     /// <summary>
     /// Give us a random point in the nav mesh area to do random patrolling
