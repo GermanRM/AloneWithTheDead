@@ -39,6 +39,12 @@ public class ZombieAnimation : MonoBehaviour
         animator.SetTrigger("RunTrigger");
     }
 
+    public void AttackManager()
+    {
+        animator.SetInteger("AttackIndex", Random.Range(0, 1));
+        animator.SetTrigger("AttackTrigger");
+    }
+
     private void Initialize()
     {
         animator.SetInteger("IdleIndex", Random.Range(0, 3));
@@ -75,7 +81,7 @@ public class ZombieAnimation : MonoBehaviour
     /// </summary>
     private void OnZombieAttacks()
     {
-
+        AttackManager();
     }
 
     /// <summary>
