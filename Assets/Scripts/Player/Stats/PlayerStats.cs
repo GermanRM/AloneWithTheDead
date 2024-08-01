@@ -51,6 +51,9 @@ public class PlayerStats : MonoBehaviour
     public event Action<FPSItem> OnPlayerStartReload;
     public event Action<FPSItem> OnPlayerFinishReload;
 
+    public event Action OnPlayerStartAiming;
+    public event Action OnPlayerEndAiming;
+
     #endregion
 
     private PlayerControls playerControls;
@@ -98,8 +101,16 @@ public class PlayerStats : MonoBehaviour
 
     private void Shoot()
     {
-        if (playerControls.Interactions.Aim.WasPerformedThisFrame() && !playerMovement.IsRunningAndMoving()) isAiming = true;
-        if (playerControls.Interactions.Aim.WasReleasedThisFrame() && isAiming) isAiming = false;
+        if (playerControls.Interactions.Aim.WasPerformedThisFrame() && !playerMovement.IsRunningAndMoving())
+        {
+            isAiming = true;
+            OnPlayerStartAiming?.Invoke();
+        }
+        if (playerControls.Interactions.Aim.WasReleasedThisFrame() && isAiming)
+        {
+            isAiming = false;
+            OnPlayerEndAiming?.Invoke();    
+        }
 
         if (playerControls.Interactions.Attack.WasPerformedThisFrame())
         {

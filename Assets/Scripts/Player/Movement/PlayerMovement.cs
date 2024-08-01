@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector3 groundCheckBoxSize;
     [SerializeField] private float groundRayDistance;
     [SerializeField] private LayerMask groundLayer;
+    private bool wasGrounded;
 
     [Header("Crouch Settings")]
     [SerializeField] private float crouchColliderHeight = 1.0f;
@@ -67,6 +68,10 @@ public class PlayerMovement : MonoBehaviour
 
     public event Action OnPlayerJump;
     public event Action OnPlayerLand;
+
+    public event Action OnPlayerMove;
+    public event Action OnPlayerCrouch;
+    public event Action OnPlayerGetUp;
 
     #endregion
 
@@ -130,6 +135,8 @@ public class PlayerMovement : MonoBehaviour
         GetInputs();
         UpdateColliderHeight();
         UpdateTransform();
+
+        EventTriggers();
     }
 
     #region Inputs
@@ -203,6 +210,8 @@ public class PlayerMovement : MonoBehaviour
                         jumpStartTime = Time.time;
                         isJumping = true;
                         jumpVelocity = jumpForce;
+
+                        OnPlayerJump?.Invoke();
                     }
                 }
             }
@@ -273,6 +282,31 @@ public class PlayerMovement : MonoBehaviour
         float smoothTime = isCrouching ? crouchSmoothTime : standUpSmoothTime;
         characterController.height = Mathf.SmoothDamp(characterController.height, targetHeight, ref colliderHeightVelocity, smoothTime, float.MaxValue, Time.deltaTime);
         characterController.center = new Vector3(0, 0.5f * characterController.height + characterController.stepOffset, 0);
+    }
+
+    /// <summary>
+    /// Method to trigger some movement events
+    /// </summary>
+    private void EventTriggers()
+    {
+        if (IsMoving(0.2f) && isGrounded())
+            OnPlayerMove?.Invoke();
+
+
+        if (!wasGrounded && isGrounded())
+        {
+            OnPlayerLand?.Invoke();
+        }
+
+        wasGrounded = isGrounded();
+
+        if (playerControl.Movement.Crouch.WasPerformedThisFrame() && !isCrouching)
+            OnPlayerCrouch?.Invoke();
+
+        if (playerControl.Movement.Crouch.WasReleasedThisFrame() && isCrouching)
+            OnPlayerGetUp?.Invoke();
+
+
     }
 
     #endregion
