@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Flashlight
   m_EditorClassIdentifier: 
   WeaponDamage: 0
+  WeaponNoise: 0
   weaponType: 1
   WeaponReach: 0
   WeaponAttackDelay: 0
   AmmunitionClipSize: 8
-  ItemPrefab: {fileID: 8271269421579297201, guid: 1b6afc0bd4c84ba488888d67c0a19349,
+  ItemPrefab: {fileID: 6545066619514125705, guid: 77c71e7f346e0994495d870ed15b32ce,
     type: 3}
   CanCancelReloadAnimationByShooting: 0
   CanCancelReloadAnimationByChangingItem: 0
