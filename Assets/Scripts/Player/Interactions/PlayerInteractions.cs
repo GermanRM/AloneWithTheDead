@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Tensori.FPSHandsHorrorPack;
@@ -9,12 +10,18 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private float pickupDistance;
     [SerializeField] private LayerMask interacteableMask;
     GameObject lastHitObject;
-    private Material currentMaterial;
+    private Outline currentOutline;
 
     [Header("Script References")]
     [SerializeField] private PlayerStats stats;
     [SerializeField] private PlayerSneak sneak;
     private PlayerControls playerControls;
+
+    #region Events
+
+    public event Action OnPlayerPickupItem;
+
+    #endregion
 
     private void Awake()
     {
@@ -51,6 +58,7 @@ public class PlayerInteractions : MonoBehaviour
                 {
                     PickupItem pickupItem = hit.collider.GetComponent<PickupItem>();
                     stats.AddItem(pickupItem.fpsItem);
+                    OnPlayerPickupItem?.Invoke();
                     pickupItem.DestroyObject();
                 }
 
@@ -68,10 +76,10 @@ public class PlayerInteractions : MonoBehaviour
                     lastHitObject = hitObject;
 
                     // Obtener el material del nuevo objeto
-                    currentMaterial = hitObject.GetComponentInChildren<Renderer>().materials[1];
+                    currentOutline = hitObject.GetComponent<Outline>();
 
                     // Cambiar la escala
-                    currentMaterial.SetFloat("_Scale", 1.6f);
+                    currentOutline.enabled = true;
 
                     #endregion
                 }
@@ -89,11 +97,11 @@ public class PlayerInteractions : MonoBehaviour
         if (lastHitObject != null)
         {
             // Restablecer la escala del material al valor original
-            currentMaterial.SetFloat("_Scale", 0);
+            currentOutline.enabled = false;
 
             // Limpiar el estado
             lastHitObject = null;
-            currentMaterial = null;
+            currentOutline = null;
         }
     }
 
