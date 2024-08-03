@@ -255,7 +255,7 @@ public class ZombieMovement : MonoBehaviour
 
     public bool DetectBlindSpot()
     {
-        return Physics.BoxCast(blindSpot.position, blindSpotSize, transform.forward, transform.rotation, blindSpotDistance, defaultLayer | enemyLayer);
+        return Physics.BoxCast(blindSpot.position, blindSpotSize, transform.forward, transform.rotation, blindSpotDistance, enemyLayer);
     }
 
     /// <summary>

@@ -48,6 +48,15 @@ public class Crosshair : MonoBehaviour
             playerMovement = playerRef.GetComponent<PlayerMovement>();
         }
 
+        if (GameManager.Instance.gameState == GameState.Paused)
+        {
+            transform.parent.gameObject.SetActive(false);
+        }
+        else
+        {
+            transform.parent.gameObject.SetActive(true);
+        }
+
         EnableDisableOnAim();
         CrosshairMovement();
         OpenCrosshairInMovement();

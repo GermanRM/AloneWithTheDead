@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9112076700457745198}
   - component: {fileID: 4454851010923350080}
   - component: {fileID: 7439610769587962069}
+  - component: {fileID: 1814992480557080042}
   m_Layer: 9
   m_Name: Knife
   m_TagString: Interacteable
@@ -60,6 +61,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.13937593, y: 0.18618819, z: 0.36623383}
   m_Center: {x: -0.0018004179, y: 0.01800467, z: 0.14043617}
+--- !u!114 &1814992480557080042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9112076700457745197}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &9112076701295516744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70,7 +89,7 @@ PrefabInstance:
     - target: {fileID: 1977741064854603309, guid: ec62e62492da7974a844d1dfb07bd78d,
         type: 3}
       propertyPath: m_Materials.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1977741064854603309, guid: ec62e62492da7974a844d1dfb07bd78d,
         type: 3}
@@ -80,7 +99,7 @@ PrefabInstance:
     - target: {fileID: 3982685217347572963, guid: ec62e62492da7974a844d1dfb07bd78d,
         type: 3}
       propertyPath: m_Materials.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3982685217347572963, guid: ec62e62492da7974a844d1dfb07bd78d,
         type: 3}
@@ -95,7 +114,7 @@ PrefabInstance:
     - target: {fileID: 5288365649503254727, guid: ec62e62492da7974a844d1dfb07bd78d,
         type: 3}
       propertyPath: m_Materials.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5288365649503254727, guid: ec62e62492da7974a844d1dfb07bd78d,
         type: 3}
