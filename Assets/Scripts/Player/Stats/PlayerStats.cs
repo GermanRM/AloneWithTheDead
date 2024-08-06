@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     [Header("Player Health Properties")]
-    [SerializeField] private float playerHealth;
+    [SerializeField] public float playerHealth;
     public bool isDeath;
 
     [Header("Player Combat Properties")]
