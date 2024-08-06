@@ -9,8 +9,15 @@ public class PlayerInteractions : MonoBehaviour
     [Header("Pickup Properties")]
     [SerializeField] private float pickupDistance;
     [SerializeField] private LayerMask interacteableMask;
+
+    [Header("Outline Properties")]
+    [SerializeField] private string[] tagsToCheck;
     GameObject lastHitObject;
     private Outline currentOutline;
+
+    [Header("Shot Particles Properties")]
+    [SerializeField] private Transform shotParticleParent;
+    [SerializeField] private GameObject shotParticlePrefab;
 
     [Header("Script References")]
     [SerializeField] private PlayerStats stats;
@@ -43,18 +50,18 @@ public class PlayerInteractions : MonoBehaviour
     void Update()
     {
         Pickup();
+        OutlineInteractuable();
     }
 
-    #region Interactions
+    #region Pickup
 
     private void Pickup()
     {
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, pickupDistance, interacteableMask))
+        if (playerControls.Interactions.Interact.WasPerformedThisFrame())
         {
-            if (hit.collider.CompareTag("Interacteable"))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, pickupDistance, interacteableMask))
             {
-
-                if (playerControls.Interactions.Interact.WasPerformedThisFrame())
+                if (hit.collider.CompareTag("Gun"))
                 {
                     PickupItem pickupItem = hit.collider.GetComponent<PickupItem>();
                     stats.AddItem(pickupItem.fpsItem);
@@ -62,27 +69,39 @@ public class PlayerInteractions : MonoBehaviour
                     pickupItem.DestroyObject();
                 }
 
-                #region Render outline
-
-                GameObject hitObject = hit.collider.gameObject;
-
-                // Solo hacer algo si el objeto al que apuntamos ha cambiado
-                if (hitObject != lastHitObject)
+                if (hit.collider.CompareTag("Door"))
                 {
-                    // Restablecer el material del último objeto interactuado
-                    ResetLastHitObject();
-
-                    // Guardar el nuevo objeto interactuado
-                    lastHitObject = hitObject;
-
-                    // Obtener el material del nuevo objeto
-                    currentOutline = hitObject.GetComponent<Outline>();
-
-                    // Cambiar la escala
-                    currentOutline.enabled = true;
-
-                    #endregion
+                    DoorManager doorManager = hit.collider.GetComponentInParent<DoorManager>();
+                    if (doorManager.isOpened == false)
+                        doorManager.OpenDoor();
+                    else
+                        doorManager.CloseDoor();
                 }
+            }
+        }
+    }
+
+    #endregion
+
+    #region Outline Manager
+
+    private void OutlineInteractuable()
+    {
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, pickupDistance, interacteableMask))
+        {
+            if (IsTagInArray(hit.collider.tag, tagsToCheck))
+            {
+                lastHitObject = hit.collider.gameObject;
+
+                // Obtener el material del nuevo objeto
+                currentOutline = lastHitObject.GetComponent<Outline>();
+
+                // Cambiar la escala
+                currentOutline.enabled = true;
+            }
+            else
+            {
+                ResetLastHitObject();
             }
         }
         else
@@ -105,6 +124,24 @@ public class PlayerInteractions : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// We use this to check if the tag of the raycast is in the tagsList (tagsToCheck)
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <param name="tags"></param>
+    /// <returns></returns>
+    bool IsTagInArray(string tag, string[] tags)
+    {
+        foreach (string t in tags)
+        {
+            if (tag == t)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     #endregion
 
     #region Combat
@@ -113,6 +150,7 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (item.weaponType == FPSItem.WeaponType.Fire) //Si es un arma de fuego
         {
+            Instantiate(shotParticlePrefab, shotParticleParent);
             sneak.MakeSneakNoise(item.WeaponNoise); //Make Noise
         }
 
