@@ -31,6 +31,37 @@ Transform:
   m_Father: {fileID: 8587992233087858523}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5514028856190862532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4857590964872178975}
+  m_Layer: 6
+  m_Name: handgunShotParticle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4857590964872178975
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5514028856190862532}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.0183, y: 0.101, z: 0.1816}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7533097801536381665}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &6495743589488369138
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,6 +758,9 @@ MonoBehaviour:
   tagsToCheck:
   - Door
   - Gun
+  shotParticleParent: {fileID: 4857590964872178975}
+  shotParticlePrefab: {fileID: 1336949550903370, guid: 4543ab5e3d405ec40a8d4e9aa5165030,
+    type: 3}
   stats: {fileID: 6601492414118616581}
   sneak: {fileID: 3079118120437073433}
 --- !u!143 &8587992233087858522
@@ -1701,6 +1735,12 @@ PrefabInstance:
 --- !u!95 &4170444443852999347 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 8625456702037302360, guid: 3ed92da55700be14ba10f9ba16dd4925,
+    type: 3}
+  m_PrefabInstance: {fileID: 5644032928589420267}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7533097801536381665 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2799359362893886474, guid: 3ed92da55700be14ba10f9ba16dd4925,
     type: 3}
   m_PrefabInstance: {fileID: 5644032928589420267}
   m_PrefabAsset: {fileID: 0}

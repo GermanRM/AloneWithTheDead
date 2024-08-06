@@ -15,6 +15,10 @@ public class PlayerInteractions : MonoBehaviour
     GameObject lastHitObject;
     private Outline currentOutline;
 
+    [Header("Shot Particles Properties")]
+    [SerializeField] private Transform shotParticleParent;
+    [SerializeField] private GameObject shotParticlePrefab;
+
     [Header("Script References")]
     [SerializeField] private PlayerStats stats;
     [SerializeField] private PlayerSneak sneak;
@@ -146,6 +150,7 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (item.weaponType == FPSItem.WeaponType.Fire) //Si es un arma de fuego
         {
+            Instantiate(shotParticlePrefab, shotParticleParent);
             sneak.MakeSneakNoise(item.WeaponNoise); //Make Noise
         }
 
