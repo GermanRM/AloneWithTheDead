@@ -1,41 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PopupManager : MonoBehaviour
 {
     [Header("Popup Properties")]
-    [SerializeField] private List<GameObject> popupList = new List<GameObject>();
+    [SerializeField] private GameObject popupPrefab;
+    [SerializeField] private Transform popupContainer;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void FadeIn(GameObject go)
-    {
-        Animator animator = go.GetComponent<Animator>();
-
-        if (animator != null)
+        //This is to debug the funtionality. Delete it later
+        if (Input.GetKeyUp(KeyCode.R))
         {
-            animator.SetTrigger("FadeIn");
+            CreatePopup("test", 3, 5);
         }
     }
 
-     private void FadeOut(GameObject go)
+    public void CreatePopup(string description, float liveTime, float secondsToDestroy)
     {
-        Animator animator = go.GetComponent<Animator>();
+        GameObject go = Instantiate(popupPrefab, popupContainer);
+        go.GetComponentInChildren<TMP_Text>().text = description;
+        StartCoroutine(DestroyPopup(go, liveTime, secondsToDestroy));
+    }
 
-        if (animator != null)
-        {
-            animator.SetTrigger("FadeOut");
-        }
+    public IEnumerator DestroyPopup(GameObject popup, float liveTime, float secondsToDestroy)
+    {
+        yield return new WaitForSeconds(liveTime);
+        popup.GetComponent<Animator>().SetTrigger("FadeOutTrigger");
+        yield return new WaitForSeconds(secondsToDestroy);
+        Destroy(popup);
     }
 }
