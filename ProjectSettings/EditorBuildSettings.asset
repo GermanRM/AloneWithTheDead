@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainLevel.unity
     guid: 0629f55954a7520439fcfbbd0a75f3a9
+  - enabled: 1
+    path: Assets/Scenes/ZombieAI.unity
+    guid: c7d906093a64fe949a15346a4cfd2cee
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f16fb59f8da57c84e80b73e54ff4d565,
       type: 2}

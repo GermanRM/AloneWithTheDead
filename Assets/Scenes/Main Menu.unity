@@ -3186,7 +3186,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: MainLevel
+          m_StringArgument: ZombieAI
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1257310298
@@ -4258,7 +4258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameState: 0
   lobbyScene: Main Menu
-  gameScene: MainLevel
+  gameScene: ZombieAI
   timeToComplete: 0
   gameLoopCanvas: {fileID: 3821973708628036588, guid: 7ebbc66717124934381ec9f3d2b53bc3,
     type: 3}

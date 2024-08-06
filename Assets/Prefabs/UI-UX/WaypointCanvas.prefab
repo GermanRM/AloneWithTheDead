@@ -214,10 +214,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3480641206912256545, guid: 1a2afdffa640e86428aba497168ae634,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3480641206912256556, guid: 1a2afdffa640e86428aba497168ae634,
         type: 3}
       propertyPath: m_Name
       value: WaypointIcon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3480641207341098618, guid: 1a2afdffa640e86428aba497168ae634,
+        type: 3}
+      propertyPath: m_Name
+      value: MetersText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a2afdffa640e86428aba497168ae634, type: 3}
