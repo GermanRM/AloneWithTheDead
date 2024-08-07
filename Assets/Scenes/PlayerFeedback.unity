@@ -713,22 +713,22 @@ PrefabInstance:
     - target: {fileID: 6062413114012437124, guid: 371712805a8d9764db3668b3423b71da,
         type: 3}
       propertyPath: IsBoring
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6062413114012437124, guid: 371712805a8d9764db3668b3423b71da,
         type: 3}
       propertyPath: IsMoving
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6062413114012437124, guid: 371712805a8d9764db3668b3423b71da,
         type: 3}
       propertyPath: IsFollowing
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6062413114012437124, guid: 371712805a8d9764db3668b3423b71da,
         type: 3}
       propertyPath: IsPatrolling
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 371712805a8d9764db3668b3423b71da, type: 3}
