@@ -4,9 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Interacteable
   - SpawnPoint
   - Noshadows
+  - Gun
+  - Door
+  - Interacteable
   layers:
   - Default
   - TransparentFX
