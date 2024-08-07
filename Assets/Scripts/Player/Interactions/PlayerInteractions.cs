@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Tensori.FPSHandsHorrorPack;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInteractions : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private string[] tagsToCheck;
     GameObject lastHitObject;
     private Outline currentOutline;
+
+    [Header("Player Hurt Properties")]
+    [SerializeField] private Image hurtImage;
 
     [Header("Shot Particles Properties")]
     [SerializeField] private Transform shotParticleParent;
@@ -39,11 +43,13 @@ public class PlayerInteractions : MonoBehaviour
     private void OnEnable()
     {
         stats.OnPlayerAttack += OnPlayerAttacks;
+        stats.OnPlayerDamaged += OnPlayerHurts;
     }
 
     private void OnDisable()
     {
         stats.OnPlayerAttack -= OnPlayerAttacks;
+        stats.OnPlayerDamaged -= OnPlayerHurts;
     }
 
     // Update is called once per frame
@@ -51,6 +57,11 @@ public class PlayerInteractions : MonoBehaviour
     {
         Pickup();
         OutlineInteractuable();
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            stats.DamagePlayer(1);
+        }
     }
 
     #region Pickup
@@ -157,6 +168,28 @@ public class PlayerInteractions : MonoBehaviour
         if (item.weaponType == FPSItem.WeaponType.Melee) //Si es un arma cuerpo a cuerpo
         {
             sneak.MakeSneakNoise(item.WeaponNoise); //Make Noise
+        }
+    }
+
+    private void OnPlayerHurts(float damage)
+    {
+        switch (stats.playerHealth)
+        {
+            case 4:
+                hurtImage.color = new Color(hurtImage.color.r, hurtImage.color.g, hurtImage.color.b, 0);
+                break;
+            case 3:
+                hurtImage.color = new Color(hurtImage.color.r, hurtImage.color.g, hurtImage.color.b, 0.3f);
+                break;
+            case 2:
+                hurtImage.color = new Color(hurtImage.color.r, hurtImage.color.g, hurtImage.color.b, 0.6f);
+                break;
+            case 1:
+                hurtImage.color = new Color(hurtImage.color.r, hurtImage.color.g, hurtImage.color.b, 0.8f);
+                break;
+            case 0:
+                hurtImage.color = new Color(hurtImage.color.r, hurtImage.color.g, hurtImage.color.b, 1);
+                break;
         }
     }
 
