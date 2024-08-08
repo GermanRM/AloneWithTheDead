@@ -7,10 +7,11 @@ using UnityEngine.UI;
 
 public class MissionWaypoint : MonoBehaviour
 {
-
-public Image img;
-public Transform target;
-public TMP_Text meter;
+    [Header("Waypoint Properties")]
+    [SerializeField] private Image img;
+    [SerializeField] private Transform target;
+    [SerializeField] private TMP_Text metersText;
+    [SerializeField] private float maxMeters; //Max distance to reduce size
 
     private void Update()
     {
@@ -35,7 +36,10 @@ public TMP_Text meter;
         pos.y = Math.Clamp(pos.y, minY, maxY);
 
         img.transform.position = pos;
-        meter.text = ((int)Vector3.Distance(target.position, transform.position)).ToString() + "m";
+        metersText.text = ((int)Vector3.Distance(target.position, transform.position)).ToString() + " m";
 
+        float scaleOnDistance = Vector3.Distance(target.position, transform.forward) / maxMeters;
+        img.rectTransform.localScale = new Vector3(scaleOnDistance, scaleOnDistance, scaleOnDistance);
+        img.rectTransform.localScale = Vector3.ClampMagnitude(img.rectTransform.localScale, 1);
     }
 }
