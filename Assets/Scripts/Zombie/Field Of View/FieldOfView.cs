@@ -22,9 +22,12 @@ public class FieldOfView : MonoBehaviour
     [SerializeField] private List<Transform> visibleTargets = new List<Transform>();
 
     [Header("Debug Properties")]
+    [Tooltip("Enable to see the fov in gizmos")]
     [SerializeField] private bool seeFOV;
 
     #region Getter / Setter
+
+    public bool CanSeePlayer() { return visibleTargets.Count > 0; }
 
     public float GetViewRadius() {  return viewRadius; }
     public float GetViewAngle() { return viewAngle; }
@@ -36,9 +39,27 @@ public class FieldOfView : MonoBehaviour
 
     #endregion
 
+    private void Start()
+    {
+        StartCoroutine(FOVDelay(0.2f));
+    }
+
     private void Update()
     {
-        FindVisibleTargets();
+        //FindVisibleTargets();
+    }
+
+    /// <summary>
+    /// We use this IEnumerator to delay the fov (save perfomance)
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator FOVDelay(float seconds)
+    {
+        while (true)
+        {
+            FindVisibleTargets();
+            yield return new WaitForSeconds(seconds);
+        }
     }
 
     /// <summary>

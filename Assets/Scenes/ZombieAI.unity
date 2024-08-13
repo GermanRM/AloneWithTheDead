@@ -97,7 +97,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 22be14fa0ef63ec4594c7d312eac1dc4,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -896,7 +897,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &849847994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2168,6 +2169,80 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b81a62990f031e24a8355bcbb6f432bc, type: 3}
+--- !u!1001 &5698232165474364473
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5698232164586122439, guid: cd0bc39dee7a01d4da5b0a75487f4dc2,
+        type: 3}
+      propertyPath: m_Name
+      value: SmartZombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698232164586122554, guid: cd0bc39dee7a01d4da5b0a75487f4dc2,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698232164586122554, guid: cd0bc39dee7a01d4da5b0a75487f4dc2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698232164586122554, guid: cd0bc39dee7a01d4da5b0a75487f4dc2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698232164586122554, guid: cd0bc39dee7a01d4da5b0a75487f4dc2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698232164586122554, guid: cd0bc39dee7a01d4da5b0a75487f4dc2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698232164586122554, guid: cd0bc39dee7a01d4da5b0a75487f4dc2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698232164586122554, guid: cd0bc39dee7a01d4da5b0a75487f4dc2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698232164586122554, guid: cd0bc39dee7a01d4da5b0a75487f4dc2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698232164586122554, guid: cd0bc39dee7a01d4da5b0a75487f4dc2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698232164586122554, guid: cd0bc39dee7a01d4da5b0a75487f4dc2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698232164586122554, guid: cd0bc39dee7a01d4da5b0a75487f4dc2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698232164586122557, guid: cd0bc39dee7a01d4da5b0a75487f4dc2,
+        type: 3}
+      propertyPath: seeFOV
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cd0bc39dee7a01d4da5b0a75487f4dc2, type: 3}
 --- !u!1001 &9112076700817927228
 PrefabInstance:
   m_ObjectHideFlags: 0
